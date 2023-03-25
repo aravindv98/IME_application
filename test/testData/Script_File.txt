@@ -1,0 +1,23 @@
+#load Test_Image.ppm and call it 'Test_Image'
+load test/testData/Test_Image.ppm Test_Image
+
+#brighten Test_Image by adding 10
+brighten 10 Test_Image Test_Image-brighten
+
+#save Test_Image-brighter
+save test/testData/Test_Image-brighten.ppm Test_Image-brighten
+
+#flip Test_Image vertically
+vertical-flip Test_Image Test_Image-vertical
+
+#flip the vertically flipped Test_Image horizontally
+horizontal-flip Test_Image-vertical Test_Image-vertical-horizontal
+
+#create a greyscale using only the value component, as an image Test_Image-greyscale
+greyscale value-component Test_Image Test_Image-greyscale
+
+#give the Test_Image a red tint
+rgb-split Test_Image Test_Image-red Test_Image-green Test_Image-blue
+
+#combine them back, but by using the brightened red we get a red tint
+rgb-combine Test_Image-combine Test_Image-red Test_Image-green Test_Image-blue

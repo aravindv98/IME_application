@@ -1,0 +1,77 @@
+#load duck.ppm and call it 'duck'
+load images/duck.ppm duck
+
+#brighten duck by adding 50
+brighten 50 duck duck-brighter-by-50
+
+#flip duck vertically
+vertical-flip duck duck-vertical
+
+#flip the vertically flipped duck horizontally
+horizontal-flip duck-vertical duck-vertical-horizontal
+
+#create a greyscale using only the value component, as an image duck-greyscale-value
+greyscale value-component duck duck-greyscale-value
+
+#create a greyscale using only the intensity component, as an image duck-greyscale-intensity
+greyscale intensity-component duck duck-greyscale-intensity
+
+#create a greyscale using only the luma component, as an image duck-greyscale-luma
+greyscale luma-component duck duck-greyscale-luma
+
+#create a greyscale using only the red component, as an image duck-greyscale-red
+greyscale red-component duck duck-greyscale-red
+
+#create a greyscale using only the green component, as an image duck-greyscale-green
+greyscale green-component duck duck-greyscale-green
+
+#create a greyscale using only the blue component, as an image duck-greyscale-blue
+greyscale blue-component duck duck-greyscale-blue
+
+#save duck-brighter
+save ../res/duck-brighter-by-50.ppm duck-brighter-by-50
+
+#save duck-greyscale-value
+save ../res/duck-greyscale-value.ppm duck-greyscale-value
+
+#save duck-greyscale-intensity
+save ../res/duck-greyscale-intensity.ppm duck-greyscale-intensity
+
+#save duck-greyscale-luma
+save ../res/duck-greyscale-luma.ppm duck-greyscale-luma
+
+#save duck-greyscale-red
+save ../res/duck-greyscale-red.ppm duck-greyscale-red
+
+#save duck-greyscale-green
+save ../res/duck-greyscale-green.ppm duck-greyscale-green
+
+#save duck-greyscale-blue
+save ../res/duck-greyscale-blue.ppm duck-greyscale-blue
+
+#save duck-vertical
+save ../res/duck-vertical.ppm duck-vertical
+
+#save duck-vertical-horizontal
+save ../res/duck-vertical-horizontal.ppm duck-vertical-horizontal
+
+#split the duck image
+rgb-split duck duck-red duck-green duck-blue
+
+#save duck-red
+save ../res/duck-red.ppm duck-red
+
+#save duck-green
+save ../res/duck-green.ppm duck-green
+
+#save duck-blue
+save ../res/duck-blue.ppm duck-blue
+
+#combine the duck images
+rgb-combine duck-combine duck-red duck-green duck-blue
+
+#save duck-combine
+save ../res/duck-combine.ppm duck-combine
+
+#overwrite duck with another file
+load images/Test_Image.ppm duck

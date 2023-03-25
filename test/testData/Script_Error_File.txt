@@ -1,0 +1,8 @@
+#load Test_Image.ppm and call it 'Test_Image'
+load test/testData/Test_Image.ppm Test_Image
+
+#brighten Test_Image by adding 10
+brightened 10 Test_Image Test_Image-brighten
+
+#save Test_Image-brighter
+save test/testData/Test_Image-brighten.ppm Test_Image-brighten
