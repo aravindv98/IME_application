@@ -125,6 +125,11 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       BlurImage obj = new BlurImage(a[1], a[2]);
       return obj;
     });
+
+    knownCommands.put("sepia", (a, o)-> {
+      SepiaImage obj = new SepiaImage(a[1], a[2]);
+      return obj;
+    });
   }
 
   /**
