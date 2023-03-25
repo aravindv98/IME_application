@@ -74,9 +74,73 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   abstract public boolean saveImage(String imagePath, String imageName, OutputStream out);
 
   @Override
-  abstract public void createGreyScale(String componentType,
-                                       String imageName,
-                                       String destinationImageName);
+  public void createGreyScale(String componentType,
+                              String imageName,
+                              String destinationImageName) throws IllegalArgumentException {
+
+    checkIfImagePresentInMap(imageName);
+
+    Pixels obj = imageNamePropertiesMap.get(imageName);
+    Pixels newObj = new Pixels(obj);
+
+    for (int y = 0; y < obj.height; y++) {
+      for (int x = 0; x < obj.width; x++) {
+        String[] arr = obj.listOfPixels[x][y].split(" ");
+        int grey;
+
+        // Grey scaling of only the red component
+        switch (componentType) {
+          case "red-component":
+            grey = (int) (0.299 * Integer.parseInt(arr[0])
+                    + 0.587 * Integer.parseInt(arr[0])
+                    + 0.114 * Integer.parseInt(arr[0]));
+            break;
+
+          // Grey scaling of only the green component
+          case "green-component":
+            grey = (int) (0.299 * Integer.parseInt(arr[1])
+                    + 0.587 * Integer.parseInt(arr[1])
+                    + 0.114 * Integer.parseInt(arr[1]));
+            break;
+
+          // Grey scaling of only the blue component
+          case "blue-component":
+            grey = (int) (0.299 * Integer.parseInt(arr[2])
+                    + 0.587 * Integer.parseInt(arr[2])
+                    + 0.114 * Integer.parseInt(arr[2]));
+            break;
+
+          // The maximum value of the three components for each pixel
+          case "value-component":
+            grey = Math.max(
+                    Math.max(Integer.parseInt(arr[0]), Integer.parseInt(arr[1])),
+                    Integer.parseInt(arr[2]));
+            break;
+
+          // The weighted sum
+          case "luma-component":
+            grey = (int) (0.2126 * Integer.parseInt(arr[0])
+                    + 0.7152 * Integer.parseInt(arr[1])
+                    + 0.0722 * Integer.parseInt(arr[2]));
+            break;
+
+          // Average of three components for each pixel
+          case "intensity-component":
+            grey = (Integer.parseInt(arr[0])
+                    + Integer.parseInt(arr[1])
+                    + Integer.parseInt(arr[2])) / 3;
+            break;
+
+          default:
+            throw new IllegalArgumentException("Invalid Component Type for create greyscale image");
+        }
+
+        newObj.listOfPixels[x][y] = grey + " " + grey + " " + grey;
+      }
+    }
+
+    imageNamePropertiesMap.put(destinationImageName, newObj);
+  }
 
   @Override
   public void horizontalFlip(String imageName, String destinationImageName)
@@ -321,7 +385,51 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   @Override
   public void dither(String imageName, String destinationImageName)
           throws IllegalArgumentException {
-    return;
+
+    checkIfImagePresentInMap(imageName);
+      this.createGreyScale("luma",imageName,
+              "tempLumaForDither");
+      checkIfImagePresentInMap("tempLumaForDither");
+    Pixels luma = imageNamePropertiesMap.get("tempLumaForDither");
+    Pixels dither = new Pixels(luma);
+    for (int y = 0; y < luma.height; y++) {
+        for (int x = 0; x < luma.width; x++) {
+          String[] arr = luma.listOfPixels[x][y].split(" ");
+          int oldRed = Integer.parseInt(arr[0]);
+          int newRed = oldRed < 128 ? 0 : 255;
+          dither.listOfPixels[x][y] = newRed + " " + newRed + " " + newRed;
+          int error = oldRed - newRed;
+          if(x < luma.width -1){
+            String[] neighborRow = luma.listOfPixels[x+1][y].split(" ");
+            int neighborRed = Integer.parseInt(neighborRow[0]);
+            int calculatedRed = neighborRed + error * 7/16;
+            luma.listOfPixels[x+1][y] = calculatedRed + " " + calculatedRed +
+                    " " + calculatedRed;
+          }
+          if(x > 0 && y < luma.height - 1) {
+            String[] neighborRow = luma.listOfPixels[x-1][y+1].split(" ");
+            int neighborRed = Integer.parseInt(neighborRow[0]);
+            int calculatedRed = neighborRed + error * 3/16;
+            luma.listOfPixels[x-1][y+1] = calculatedRed + " " + calculatedRed +
+                    " " + calculatedRed;
+          }
+          if(y < luma.height - 1){
+            String[] neighborRow = luma.listOfPixels[x][y+1].split(" ");
+            int neighborRed = Integer.parseInt(neighborRow[0]);
+            int calculatedRed = neighborRed + error * 5/16;
+            luma.listOfPixels[x][y+1] = calculatedRed + " " + calculatedRed +
+                    " " + calculatedRed;
+          }
+          if(x < luma.width - 1 && y < luma.height - 1){
+            String[] neighborRow = luma.listOfPixels[x+1][y+1].split(" ");
+            int neighborRed = Integer.parseInt(neighborRow[0]);
+            int calculatedRed = neighborRed + error * 1/16;
+            luma.listOfPixels[x+1][y+1] = calculatedRed + " " + calculatedRed +
+                    " " + calculatedRed;
+          }
+      }
+    }
+    imageNamePropertiesMap.put(destinationImageName, dither);
   }
 
   @Override

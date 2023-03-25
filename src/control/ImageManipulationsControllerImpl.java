@@ -135,6 +135,10 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       SepiaImage obj = new SepiaImage(a[1], a[2]);
       return obj;
     });
+    knownCommands.put("dither", (a, o)-> {
+      DitherImage obj = new DitherImage(a[1], a[2]);
+      return obj;
+    });
   }
 
   /**
