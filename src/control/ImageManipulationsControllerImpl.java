@@ -126,6 +126,11 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       return obj;
     });
 
+    knownCommands.put("sharpen", (a, o)-> {
+      SharpenImage obj = new SharpenImage(a[1], a[2]);
+      return obj;
+    });
+
     knownCommands.put("sepia", (a, o)-> {
       SepiaImage obj = new SepiaImage(a[1], a[2]);
       return obj;

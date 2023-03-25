@@ -240,37 +240,46 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
     return imageProperties;
   }
 
-  @Override
-  public void blur(String imageName, String destinationImageName) throws IllegalArgumentException {
-    checkIfImagePresentInMap(imageName);
+  private void applyFilter(int[][] filter, String imageName, String destinationImageName) {
+    int size = filter[0].length;
+    int sum = 0;
+    for (int i=0; i<size; i++) {
+      for (int j=0; j<size; j++) {
+        sum += filter[i][j];
+      }
+    }
 
+    checkIfImagePresentInMap(imageName);
     Pixels obj = imageNamePropertiesMap.get(imageName);
     Pixels newObj = new Pixels(obj);
 
-    // Define the blur filter
-    double[][] filter = {{0.0625, 0.125, 0.0625}, {0.125, 0.25, 0.125}, {0.0625, 0.125, 0.0625}};
-
     for (int y = 0; y < obj.height; y++) {
       for (int x = 0; x < obj.width; x++) {
-        int sumRed = 0, sumGreen = 0, sumBlue = 0;
+        double sumRed = 0.0, sumGreen = 0.0, sumBlue = 0.0;
         String[] arr = obj.listOfPixels[x][y].split(" ");
 
-        for (int i=0; i <=2; i++) {
-          for (int j =0; j <= 2; j++) {
-            sumRed += Double.parseDouble(arr[0]) * filter[i][j];
-            sumGreen += Double.parseDouble(arr[1]) * filter[i][j];
-            sumBlue += Double.parseDouble(arr[2]) * filter[i][j];
+        for (int i = 0; i < size; i++) {
+          for (int j = 0; j < size; j++) {
+            sumRed += Integer.parseInt(arr[0]) * filter[i][j];
+            sumGreen += Integer.parseInt(arr[1]) * filter[i][j];
+            sumBlue += Integer.parseInt(arr[2]) * filter[i][j];
           }
         }
 
-        int newRed = sumRed/9;
-        int newGreen = sumGreen/9;
-        int newBlue = sumBlue/9;
+        int newRed = (int)(sumRed / sum);
+        int newGreen = (int)(sumGreen / sum);
+        int newBlue = (int)(sumBlue / sum);
         newObj.listOfPixels[x][y] = newRed + " " + newGreen + " " + newBlue;
       }
     }
 
     imageNamePropertiesMap.put(destinationImageName, newObj);
+  }
+
+  @Override
+  public void blur(String imageName, String destinationImageName) throws IllegalArgumentException {
+    int[][] filter = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
+    applyFilter(filter, imageName, destinationImageName);
   }
 
 
@@ -318,6 +327,8 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   @Override
   public void sharpen(String imageName, String destinationImageName)
           throws IllegalArgumentException {
-    return;
+    int[][] filter = {{-1, -1, -1, -1, -1}, {-1, 2, 2, 2, -1}, {-1, 2, 8, 2, -1},
+            {-1, 2, 2, 2, -1}, {-1, -1, -1, -1, -1}};
+    applyFilter(filter, imageName, destinationImageName);
   }
 }
