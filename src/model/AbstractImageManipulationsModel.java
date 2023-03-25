@@ -356,22 +356,23 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
     Pixels newObj = new Pixels(obj);
 
     // Define the blur filter
-    double[] filter = {1.014,1.989,0.488};
+    double[][] filter = {{0.393, 0.769, 0.189}, {0.349, 0.686, 0.168}, {0.272, 0.534, 0.131}};
 
     for (int y = 0; y < obj.height; y++) {
       for (int x = 0; x < obj.width; x++) {
-        int sumRed = 0, sumGreen = 0, sumBlue = 0;
         String[] arr = obj.listOfPixels[x][y].split(" ");
-
-        sumRed += Double.parseDouble(arr[0]) * filter[0];
-        sumGreen += Double.parseDouble(arr[1]) * filter[1];
-        sumBlue += Double.parseDouble(arr[2]) * filter[2];
-
-        newObj.listOfPixels[x][y] = Math.min(Math.max(sumRed, 0), 255) + " " +
-                Math.min(Math.max(sumGreen, 0), 255) + " " +
-                Math.min(Math.max(sumBlue, 0), 255);
+        int[] sum = {0, 0, 0};
+        for (int i = 0; i <= 2; i++) {
+          sum[i] += Double.parseDouble(arr[0]) * filter[i][0];
+          sum[i] += Double.parseDouble(arr[1]) * filter[i][1];
+          sum[i] += Double.parseDouble(arr[2]) * filter[i][2];
+        }
+        newObj.listOfPixels[x][y] = Math.min(Math.max(sum[0], 0), 255) + " " +
+                Math.min(Math.max(sum[1], 0), 255) + " " +
+                Math.min(Math.max(sum[2], 0), 255);
       }
     }
+
     imageNamePropertiesMap.put(destinationImageName, newObj);
   }
 
