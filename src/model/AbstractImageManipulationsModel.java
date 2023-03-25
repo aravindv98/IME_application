@@ -368,7 +368,7 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
             if (j == 0) {
               sumRed += Double.parseDouble(arr[0]) * filter[i][j];
             }
-            if (j == 1) {
+            else if (j == 1) {
               sumGreen += Double.parseDouble(arr[1]) * filter[i][j];
             } else {
               sumBlue += Double.parseDouble(arr[2]) * filter[i][j];
@@ -387,7 +387,7 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
           throws IllegalArgumentException {
 
     checkIfImagePresentInMap(imageName);
-      this.createGreyScale("luma",imageName,
+      this.createGreyScale("luma-component",imageName,
               "tempLumaForDither");
       checkIfImagePresentInMap("tempLumaForDither");
     Pixels luma = imageNamePropertiesMap.get("tempLumaForDither");

@@ -69,7 +69,7 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
     if (extension.equals("png")) {
       image = new BufferedImage(obj.width, obj.height, BufferedImage.TYPE_INT_ARGB);
     }
-    else if (extension.equals("jpg")) {
+    else if (extension.equals("jpg") || extension.equals("jpeg")) {
       image = new BufferedImage(obj.width, obj.height, BufferedImage.TYPE_INT_RGB);
     }
 
@@ -94,9 +94,5 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
     return true;
   }
 
-  @Override
-  public void createGreyScale(String componentType, String imageName, String destinationImageName) {
-
-  }
 
 }
