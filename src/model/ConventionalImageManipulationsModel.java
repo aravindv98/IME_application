@@ -69,7 +69,8 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
     if (extension.equals("png")) {
       image = new BufferedImage(obj.width, obj.height, BufferedImage.TYPE_INT_ARGB);
     }
-    else if (extension.equals("jpg") || extension.equals("jpeg")) {
+    else if (extension.equals("jpg") || extension.equals("jpeg") ||
+    extension.equals("bmp")) {
       image = new BufferedImage(obj.width, obj.height, BufferedImage.TYPE_INT_RGB);
     }
 
