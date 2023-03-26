@@ -17,6 +17,6 @@ public class VerticalFlip implements ImageManipulationsCmd {
     if (m == null){
       throw new IllegalArgumentException("Model not loaded!");
     }
-    m.horizontalFlip(sourceImageName, destinationImageName);
+    m.verticalFlip(sourceImageName, destinationImageName);
   }
 }

@@ -304,36 +304,41 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
     return imageProperties;
   }
 
-  private void applyFilter(int[][] filter, String imageName, String destinationImageName) {
-    int size = filter[0].length;
-    int sum = 0;
-    for (int i=0; i<size; i++) {
-      for (int j=0; j<size; j++) {
-        sum += filter[i][j];
-      }
-    }
-
+  private void applyFilter(double[][] kernel, String imageName,
+                           String destinationImageName) {
     checkIfImagePresentInMap(imageName);
+
     Pixels obj = imageNamePropertiesMap.get(imageName);
     Pixels newObj = new Pixels(obj);
 
-    for (int y = 0; y < obj.height; y++) {
-      for (int x = 0; x < obj.width; x++) {
-        double sumRed = 0.0, sumGreen = 0.0, sumBlue = 0.0;
-        String[] arr = obj.listOfPixels[x][y].split(" ");
+    // Create a new 2D array for the blurred image
+    int[][][] outputPixels = new int[obj.width][obj.height][3];
 
-        for (int i = 0; i < size; i++) {
-          for (int j = 0; j < size; j++) {
-            sumRed += Integer.parseInt(arr[0]) * filter[i][j];
-            sumGreen += Integer.parseInt(arr[1]) * filter[i][j];
-            sumBlue += Integer.parseInt(arr[2]) * filter[i][j];
+    // Apply the filter to each pixel of every channel
+    for (int i = 1; i < obj.width - 1; i++) {
+      for (int j = 1; j < obj.height - 1; j++) {
+        for (int k = 0; k < 3; k++) { // loop over RGB channels
+          double sum = 0.0;
+          for (int u = -1; u <= 1; u++) {
+            for (int v = -1; v <= 1; v++) {
+              String arr[] = obj.listOfPixels[i+u][j+v].split(" ");
+              sum += kernel[u+1][v+1] * Integer.parseInt(arr[k]);
+            }
           }
+          outputPixels[i][j][k] = (int) sum;
         }
+      }
+    }
 
-        int newRed = (int)(sumRed / sum);
-        int newGreen = (int)(sumGreen / sum);
-        int newBlue = (int)(sumBlue / sum);
-        newObj.listOfPixels[x][y] = newRed + " " + newGreen + " " + newBlue;
+    for (int i = 0; i < obj.height; i++) {
+      for (int j = 0; j < obj.width; j++) {
+        int red = outputPixels[j][i][0];
+        int green = outputPixels[j][i][1];
+        int blue = outputPixels[j][i][2];
+
+        newObj.listOfPixels[j][i] = Math.min(Math.max(red, 0), 255) + " " +
+                Math.min(Math.max(green, 0), 255) + " " +
+                Math.min(Math.max(blue, 0), 255);
       }
     }
 
@@ -342,8 +347,11 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
 
   @Override
   public void blur(String imageName, String destinationImageName) throws IllegalArgumentException {
-    int[][] filter = {{1, 1, 1}, {1, 1, 1}, {1, 1, 1}};
-    applyFilter(filter, imageName, destinationImageName);
+    // Define the blur filter kernel
+    double[][] kernel = {{0.0625, 0.125, 0.0625},
+            {0.125, 0.25, 0.125},
+            {0.0625, 0.125, 0.0625}};
+    applyFilter(kernel, imageName, destinationImageName);
   }
 
 
@@ -429,8 +437,10 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   @Override
   public void sharpen(String imageName, String destinationImageName)
           throws IllegalArgumentException {
-    int[][] filter = {{-1, -1, -1, -1, -1}, {-1, 2, 2, 2, -1}, {-1, 2, 8, 2, -1},
-            {-1, 2, 2, 2, -1}, {-1, -1, -1, -1, -1}};
-    applyFilter(filter, imageName, destinationImageName);
+    double[][] kernel = {{-0.125, -0.125, -0.125},
+            {-0.125,  2.0,   -0.125},
+            {-0.125, -0.125, -0.125}};
+
+    applyFilter(kernel, imageName, destinationImageName);
   }
 }

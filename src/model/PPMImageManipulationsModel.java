@@ -131,6 +131,4 @@ public class PPMImageManipulationsModel extends AbstractImageManipulationsModel 
 
     return true;
   }
-
-
 }
