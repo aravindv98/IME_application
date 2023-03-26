@@ -20,11 +20,12 @@ public class RGBCombine implements ImageManipulationsCmd {
   }
 
   @Override
-  public void go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
     if (m == null){
       throw new IllegalArgumentException("Model not loaded!");
     }
     m.rgbCombine(destinationImage, redSourceImageName, greenSourceImageName,
             blueSourceImageName);
+    return true;
   }
 }

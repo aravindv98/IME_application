@@ -20,11 +20,12 @@ public class RGBSplit implements ImageManipulationsCmd {
   }
 
   @Override
-  public void go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
     if (m == null){
       throw new IllegalArgumentException("Model not loaded!");
     }
     m.rgbSplit(imageName, redDestinationImageName, greenDestinationImageName,
             blueDestinationImageName);
+    return true;
   }
 }

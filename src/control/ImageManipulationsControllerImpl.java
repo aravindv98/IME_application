@@ -162,8 +162,9 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     } else {
       c = cmd.apply(arr, outputStream);
       String str = c.getClass().getSimpleName();
-      c.go(model);
-      outputStream.print(str + " successful!\n");
+      boolean success = c.go(model);
+      if (success)
+        outputStream.print(str + " successful!\n");
     }
   }
 

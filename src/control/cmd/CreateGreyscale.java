@@ -17,10 +17,11 @@ public class CreateGreyscale implements ImageManipulationsCmd {
   }
 
   @Override
-  public void go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
     if (m == null){
       throw new IllegalArgumentException("Model not loaded!");
     }
     m.createGreyScale(componentType, sourceImageName, destinationImageName);
+    return true;
   }
 }

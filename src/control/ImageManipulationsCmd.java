@@ -3,5 +3,5 @@ package control;
 import model.NewImageManipulationsModel;
 
 public interface ImageManipulationsCmd {
-  void go (NewImageManipulationsModel m);
+  boolean go (NewImageManipulationsModel m);
 }
