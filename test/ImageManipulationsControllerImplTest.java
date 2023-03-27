@@ -22,10 +22,10 @@ import static org.junit.Assert.assertEquals;
  */
 public class ImageManipulationsControllerImplTest {
 
-  OutputStream out;
-  InputStream in;
-  StringBuilder mockLog;
-  ImageManipulationsModel model;
+  protected OutputStream out;
+  protected InputStream in;
+  protected StringBuilder mockLog;
+  protected ImageManipulationsModel model;
 
   @Before
   public void setup() {
@@ -294,7 +294,7 @@ public class ImageManipulationsControllerImplTest {
    */
   public class MockModel implements ImageManipulationsModel {
 
-    private final StringBuilder log;
+    protected final StringBuilder log;
 
     MockModel(StringBuilder log) {
       this.log = log;

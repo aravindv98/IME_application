@@ -1,0 +1,17 @@
+#load manhattan-small.png and call it 'manhattan-small'
+load test/testData/manhattan-small.png manhattan-small
+
+#blur manhattan-small
+blur manhattan-small manhattan-blur 
+
+#save Test_Image-brighter
+save test/testData/manhattan-blur.ppm manhattan-blur
+
+#dither manhattan-small
+dither manhattan-small manhattan-dither 
+
+#sepia manhattan-small
+sepia manhattan-small manhattan-sepia 
+
+#sharpen manhattan-small
+sharpen manhattan-small manhattan-sharpen
