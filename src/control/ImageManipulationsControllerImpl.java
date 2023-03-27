@@ -32,6 +32,8 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
 
   IImageManipulationsModelFactory factory;
 
+  String fileExtension;
+
   public ImageManipulationsControllerImpl(OutputStream out,
                                           InputStream in) {
     this.out = out;
@@ -112,17 +114,13 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     });
 
     knownCommands.put("load", (a, o)-> {
-      if (factory != null)
-        model = factory.getModel(a[1]);
-
+      fileExtension = a[1];
       LoadImage obj = new LoadImage(a[1], a[2], o);
       return obj;
     });
 
     knownCommands.put("save", (a, o)-> {
-      if (factory != null)
-        model = factory.getModel(a[1]);
-
+      fileExtension = a[1];
       SaveImage obj = new SaveImage(a[1], a[2], o);
       return obj;
     });
@@ -146,10 +144,15 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     BiFunction<String[], PrintStream, ImageManipulationsCmd> cmd =
             knownCommands.getOrDefault(arr[0], null);
     if (cmd == null) {
-      throw new IllegalArgumentException("Invalid command entered!");
+      if (this.getClass().getSimpleName().equals("ImageManipulationsControllerImpl")) {
+        throw new IllegalArgumentException("Invalid command entered!");
+      }
+      return false;
     } else {
       c = cmd.apply(arr, outputStream);
       String str = c.getClass().getSimpleName();
+      if (factory != null)
+        model = factory.getModel(fileExtension);
       boolean success = c.go(model);
       if (success)
         outputStream.print(str + " successful!\n");

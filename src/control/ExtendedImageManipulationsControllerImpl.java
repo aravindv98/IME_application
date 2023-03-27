@@ -69,6 +69,8 @@ public class ExtendedImageManipulationsControllerImpl extends ImageManipulations
     } else {
       c = cmd.apply(arr, outputStream);
       String str = c.getClass().getSimpleName();
+      if (factory != null)
+        model = factory.getModel(fileExtension);
       boolean success = c.go(model);
       if (success)
         outputStream.print(str + " successful!\n");
