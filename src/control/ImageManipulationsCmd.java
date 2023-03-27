@@ -1,7 +1,7 @@
 package control;
 
-import model.NewImageManipulationsModel;
+import model.ImageManipulationsModel;
 
 public interface ImageManipulationsCmd {
-  boolean go (NewImageManipulationsModel m);
+  boolean go (ImageManipulationsModel m);
 }

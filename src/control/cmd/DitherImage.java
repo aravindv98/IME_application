@@ -1,9 +1,9 @@
 package control.cmd;
 
-import control.ImageManipulationsCmd;
+import control.NewImageManipulationsCmd;
 import model.NewImageManipulationsModel;
 
-public class DitherImage implements ImageManipulationsCmd {
+public class DitherImage implements NewImageManipulationsCmd {
 
   String sourceImageName;
   String destImageName;

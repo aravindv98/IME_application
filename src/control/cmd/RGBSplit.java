@@ -20,7 +20,7 @@ public class RGBSplit implements ImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
     if (m == null){
       throw new IllegalArgumentException("Model not loaded!");
     }

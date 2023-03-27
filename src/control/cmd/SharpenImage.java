@@ -1,8 +1,8 @@
 package control.cmd;
-import control.*;
+import control.NewImageManipulationsCmd;
 import model.*;
 
-public class SharpenImage implements ImageManipulationsCmd {
+public class SharpenImage implements NewImageManipulationsCmd {
 
   String sourceImageName;
   String destImageName;

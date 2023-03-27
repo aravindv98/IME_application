@@ -3,13 +3,13 @@ package model;
 public class ImageManipulationsModelFactory implements IImageManipulationsModelFactory {
 
   @Override
-  public NewImageManipulationsModel getModel(String fileName) {
+  public <T extends ImageManipulationsModel> T getModel(String fileName) {
     String[] tokens = fileName.split("\\.(?=[^\\.]+$)");
     if (tokens[1].equalsIgnoreCase("ppm")) {
-      return PPMImageManipulationsModel.getInstance();
+      return (T) PPMImageManipulationsModel.getInstance();
     }
     else {
-      return ConventionalImageManipulationsModel.getInstance();
+      return (T) ConventionalImageManipulationsModel.getInstance();
     }
   }
 }

@@ -1,8 +1,8 @@
 package control.cmd;
-import control.*;
+import control.NewImageManipulationsCmd;
 import model.*;
 
-public class BlurImage implements ImageManipulationsCmd {
+public class BlurImage implements NewImageManipulationsCmd {
 
   String sourceImageName;
   String destImageName;

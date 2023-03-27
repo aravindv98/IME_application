@@ -28,20 +28,27 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
 
   private final InputStream in;
 
-  NewImageManipulationsModel model;
+  ImageManipulationsModel model;
 
   IImageManipulationsModelFactory factory;
 
-  /**
-   * Constructor of ImageManipulationsController.
-   * It only role right now is to intialize the model object.
-   */
-  public ImageManipulationsControllerImpl(IImageManipulationsModelFactory factory,
-                                          OutputStream out,
-                                         InputStream in) {
-    this.factory = factory;
+  public ImageManipulationsControllerImpl(OutputStream out,
+                                          InputStream in) {
     this.out = out;
     this.in = in;
+  }
+
+  public ImageManipulationsControllerImpl(ImageManipulationsModel model,
+                                          OutputStream out,
+                                          InputStream in) {
+    this(out, in);
+    this.model = model;
+  }
+
+  public ImageManipulationsControllerImpl(IImageManipulationsModelFactory factory,
+                                                  OutputStream out, InputStream in) {
+    this(out, in);
+    this.factory = factory;
   }
 
   /**
@@ -77,8 +84,18 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     return builder;
   }
 
-  private void create( Map<String, BiFunction<String[], PrintStream, ImageManipulationsCmd>>
-                               knownCommands) {
+  /**
+   * Contains the execution paths of the model.
+   * Calls the appropriate model function based on the first keyword.
+   *
+   * @param arr          the file content stored in an array.
+   * @param outputStream this is used to get the exception message if file is not found.
+   */
+  protected boolean executeModel(String[] arr, PrintStream outputStream)
+          throws IllegalArgumentException {
+    Map<String, BiFunction<String[], PrintStream, ImageManipulationsCmd>> knownCommands =
+            new HashMap<>();
+
     knownCommands.put("brighten", (a, o)-> {
       BrightenImage obj = new BrightenImage(Integer.parseInt(a[1]), a[2], a[3]);
       return obj;
@@ -95,13 +112,17 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     });
 
     knownCommands.put("load", (a, o)-> {
-      model = factory.getModel(a[1]);
+      if (factory != null)
+        model = factory.getModel(a[1]);
+
       LoadImage obj = new LoadImage(a[1], a[2], o);
       return obj;
     });
 
     knownCommands.put("save", (a, o)-> {
-      model = factory.getModel(a[1]);
+      if (factory != null)
+        model = factory.getModel(a[1]);
+
       SaveImage obj = new SaveImage(a[1], a[2], o);
       return obj;
     });
@@ -121,39 +142,6 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       return obj;
     });
 
-    knownCommands.put("blur", (a, o)-> {
-      BlurImage obj = new BlurImage(a[1], a[2]);
-      return obj;
-    });
-
-    knownCommands.put("sharpen", (a, o)-> {
-      SharpenImage obj = new SharpenImage(a[1], a[2]);
-      return obj;
-    });
-
-    knownCommands.put("sepia", (a, o)-> {
-      SepiaImage obj = new SepiaImage(a[1], a[2]);
-      return obj;
-    });
-    knownCommands.put("dither", (a, o)-> {
-      DitherImage obj = new DitherImage(a[1], a[2]);
-      return obj;
-    });
-  }
-
-  /**
-   * Contains the execution paths of the model.
-   * Calls the appropriate model function based on the first keyword.
-   *
-   * @param arr          the file content stored in an array.
-   * @param outputStream this is used to get the exception message if file is not found.
-   */
-  private void executeModel(String[] arr, PrintStream outputStream)
-          throws IllegalArgumentException {
-    Map<String, BiFunction<String[], PrintStream, ImageManipulationsCmd>> knownCommands =
-            new HashMap<>();
-    create(knownCommands);
-
     ImageManipulationsCmd c;
     BiFunction<String[], PrintStream, ImageManipulationsCmd> cmd =
             knownCommands.getOrDefault(arr[0], null);
@@ -165,6 +153,8 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       boolean success = c.go(model);
       if (success)
         outputStream.print(str + " successful!\n");
+
+      return true;
     }
   }
 
@@ -180,7 +170,7 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       }
 
       String[] arr = line.split(" ");
-      executeModel(arr, outputStream);
+      this.executeModel(arr, outputStream);
     }
   }
 
@@ -193,7 +183,7 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
 
     while (!line.equals("Q")) {
       String[] arr = line.split(" ");
-      executeModel(arr, outputStream);
+      this.executeModel(arr, outputStream);
 
       if (Objects.equals(arr[0], "run")) {
         inputFromScriptFile(arr[1]);

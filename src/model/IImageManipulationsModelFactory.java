@@ -1,5 +1,5 @@
 package model;
 
 public interface IImageManipulationsModelFactory {
-  public NewImageManipulationsModel getModel(String fileName);
+  public <T extends ImageManipulationsModel> T getModel(String fileName);
 }

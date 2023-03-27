@@ -63,16 +63,7 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
 
     // Create a new file at the specified path with the given file name
     Pixels obj = imageNamePropertiesMap.get(imageName);
-    String[] tokens = imagePath.split("\\.(?=[^\\.]+$)");
-    String extension = tokens[1];
-    BufferedImage image = null;
-    if (extension.equals("png")) {
-      image = new BufferedImage(obj.width, obj.height, BufferedImage.TYPE_INT_ARGB);
-    }
-    else if (extension.equals("jpg") || extension.equals("jpeg") ||
-    extension.equals("bmp")) {
-      image = new BufferedImage(obj.width, obj.height, BufferedImage.TYPE_INT_RGB);
-    }
+    BufferedImage image = new BufferedImage(obj.width, obj.height, BufferedImage.TYPE_INT_RGB);
 
     for (int y = 0; y < obj.height; y++) {
       for (int x = 0; x < obj.width; x++) {
@@ -86,6 +77,8 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
 
     File output = new File(getFullImagePath(imagePath));
     try {
+      String[] tokens = imagePath.split("\\.(?=[^\\.]+$)");
+      String extension = tokens[1];
       ImageIO.write(image, extension, output);
     } catch (Exception e) {
       System.out.println("Error saving image: " + e.getMessage());
@@ -94,6 +87,4 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
 
     return true;
   }
-
-
 }

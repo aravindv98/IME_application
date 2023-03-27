@@ -1,9 +1,9 @@
 package control.cmd;
 
-import control.ImageManipulationsCmd;
+import control.NewImageManipulationsCmd;
 import model.NewImageManipulationsModel;
 
-public class SepiaImage implements ImageManipulationsCmd {
+public class SepiaImage implements NewImageManipulationsCmd {
 
   String sourceImageName;
   String destImageName;
