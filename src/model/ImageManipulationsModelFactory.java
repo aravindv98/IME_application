@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Factory class for returning the model object based on extension.
+ */
 public class ImageManipulationsModelFactory implements IImageManipulationsModelFactory {
 
   @Override

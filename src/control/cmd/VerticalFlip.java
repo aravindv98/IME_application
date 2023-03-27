@@ -1,22 +1,33 @@
 package control.cmd;
-import control.*;
-import model.*;
 
+import control.ImageManipulationsCmd;
+import model.ImageManipulationsModel;
+
+/**
+ * Vertical Flip of image command.
+ */
 public class VerticalFlip implements ImageManipulationsCmd {
-  String sourceImageName;
-  String destinationImageName;
+  private final String sourceImageName;
+  private final String destinationImageName;
 
+  /**
+   * Constructor for Vertical Flip of image command.
+   *
+   * @param sourceImageName Source Image name that needs to be vertically flipped.
+   * @param destinationImageName Destination Image name that is obtained after vertical flip.
+   */
   public VerticalFlip(String sourceImageName,
-                        String destinationImageName) {
+                      String destinationImageName) throws IllegalArgumentException {
+    if (sourceImageName.isEmpty() || destinationImageName.isEmpty()) {
+      throw new IllegalArgumentException("Invalid arguments passed!");
+    }
+
     this.sourceImageName = sourceImageName;
     this.destinationImageName = destinationImageName;
   }
 
   @Override
   public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
-    if (m == null){
-      throw new IllegalArgumentException("Model not loaded!");
-    }
     m.verticalFlip(sourceImageName, destinationImageName);
     return true;
   }

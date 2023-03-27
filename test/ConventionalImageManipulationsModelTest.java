@@ -11,8 +11,13 @@ import java.nio.file.Paths;
 import model.ConventionalImageManipulationsModel;
 import model.NewImageManipulationsModel;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * This class tests the main working ConventionalImageManipulation Model.
+ */
 public class ConventionalImageManipulationsModelTest {
 
   NewImageManipulationsModel obj;
@@ -101,7 +106,7 @@ public class ConventionalImageManipulationsModelTest {
     obj.loadImage(getImagePath("/test/testData/manhattan-small-greyscale-expected.png"),
             "manhattan-small-greyscale-expected", out);
     String expected = obj.getImageProperties("manhattan-small-greyscale-expected");
-    obj.createGreyScale("luma-component", "manhattan-small",
+    obj.createGreyScale("manhattan-small",
             "manhattan-small-greyscale-result");
     String result = obj.getImageProperties("manhattan-small-greyscale-result");
     assertEquals(expected, result);

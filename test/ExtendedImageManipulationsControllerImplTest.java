@@ -13,11 +13,15 @@ import model.IImageManipulationsModelFactory;
 import model.ImageManipulationsModelFactory;
 import model.NewImageManipulationsModel;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-public class ExtendedImageManipulationsControllerImplTest extends ImageManipulationsControllerImplTest{
+/**
+ * This class tests the main working ExtendedImageManipulationControllerImpl.
+ */
+public class ExtendedImageManipulationsControllerImplTest extends ImageManipulationsControllerImplTest {
 
   IImageManipulationsModelFactory factory;
+
   @Before
   public void setup() {
     super.setup();
@@ -85,12 +89,12 @@ public class ExtendedImageManipulationsControllerImplTest extends ImageManipulat
   }
 
   @Test
-  public void checkInputsForBlur() {
-    String input = "blur Test_Image Test_Image-blur\n"
+  public void checkInputsForNewGreyscale() {
+    String input = "greyscale Test_Image Test_Image-greyscale\n"
             + "Q";
     in = new ByteArrayInputStream(input.getBytes());
     String imageName = "Test_Image";
-    String destinationImageName = "Test_Image-blur";
+    String destinationImageName = "Test_Image-greyscale";
     ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(factory,
             out, in);
     controller.inputFromUserCommands();
@@ -116,6 +120,22 @@ public class ExtendedImageManipulationsControllerImplTest extends ImageManipulat
             mockLog.toString());
   }
 
+  @Test
+  public void checkInputsFor() {
+    String input = "blur Test_Image Test_Image-blur\n"
+            + "Q";
+    in = new ByteArrayInputStream(input.getBytes());
+    String imageName = "Test_Image";
+    String destinationImageName = "Test_Image-blur";
+    ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(factory,
+            out, in);
+    controller.inputFromUserCommands();
+    assertEquals("Received inputs " + imageName
+                    + " and "
+                    + destinationImageName,
+            mockLog.toString());
+  }
+
   public class NewMockModel extends ImageManipulationsControllerImplTest.MockModel
           implements NewImageManipulationsModel {
 
@@ -130,6 +150,12 @@ public class ExtendedImageManipulationsControllerImplTest extends ImageManipulat
 
     @Override
     public void dither(String imageName, String destinationImageName) throws IllegalArgumentException {
+      log.append("Received inputs ").append(imageName).append(" and ").append(destinationImageName);
+    }
+
+    @Override
+    public void createGreyScale(String imageName, String destinationImageName)
+            throws IllegalArgumentException {
       log.append("Received inputs ").append(imageName).append(" and ").append(destinationImageName);
     }
 

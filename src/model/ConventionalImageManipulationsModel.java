@@ -8,6 +8,10 @@ import java.io.OutputStream;
 
 import javax.imageio.ImageIO;
 
+/**
+ * This class extends the AbstractImageManipulationsModel class.
+ * It performs different unique kinds of supported operations on a PNG, JPEG, BMP images.
+ */
 public class ConventionalImageManipulationsModel extends AbstractImageManipulationsModel {
 
   private static ConventionalImageManipulationsModel instance = null;

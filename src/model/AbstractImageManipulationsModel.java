@@ -5,6 +5,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+/**
+ * This class contains all the common functions supported for both PPM and conventional images.
+ */
 public abstract class AbstractImageManipulationsModel implements NewImageManipulationsModel {
 
   // Maintains a map of the image name, and it's associated properties
@@ -72,6 +75,12 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
 
   @Override
   abstract public boolean saveImage(String imagePath, String imageName, OutputStream out);
+
+  @Override
+  public void createGreyScale(String imageName,
+                              String destinationImageName) throws IllegalArgumentException {
+    createGreyScale("luma-component", imageName, destinationImageName);
+  }
 
   @Override
   public void createGreyScale(String componentType,

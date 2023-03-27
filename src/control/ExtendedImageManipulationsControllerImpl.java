@@ -8,23 +8,28 @@ import java.util.Map;
 import java.util.function.BiFunction;
 
 import control.cmd.BlurImage;
+import control.cmd.CreateNewGreyscale;
 import control.cmd.DitherImage;
 import control.cmd.SepiaImage;
 import control.cmd.SharpenImage;
 import model.IImageManipulationsModelFactory;
 import model.NewImageManipulationsModel;
 
+/**
+ * Extension of the ImageManipulationsControllerImpl that contains the new model object.
+ * This supports both the old and new Image Manipulation operations.
+ */
 public class ExtendedImageManipulationsControllerImpl extends ImageManipulationsControllerImpl {
 
   NewImageManipulationsModel model;
 
   /**
-   * Constructor of ImageManipulationsController.
-   * It only role right now is to intialize the model object.
+   * Constructor of ExtendedImageManipulationsControllerImpl.
+   * It only role right now is to intialize the factory object.
    *
-   * @param factory
-   * @param out
-   * @param in
+   * @param factory factory object used to get the model.
+   * @param out OutputStream object.
+   * @param in InputStream Object.
    */
   public ExtendedImageManipulationsControllerImpl(IImageManipulationsModelFactory factory,
                                                   OutputStream out, InputStream in) {
@@ -42,24 +47,11 @@ public class ExtendedImageManipulationsControllerImpl extends ImageManipulations
     Map<String, BiFunction<String[], PrintStream, NewImageManipulationsCmd>> knownCommands =
             new HashMap<>();
 
-    knownCommands.put("blur", (a, o)-> {
-      BlurImage obj = new BlurImage(a[1], a[2]);
-      return obj;
-    });
-
-    knownCommands.put("sharpen", (a, o)-> {
-      SharpenImage obj = new SharpenImage(a[1], a[2]);
-      return obj;
-    });
-
-    knownCommands.put("sepia", (a, o)-> {
-      SepiaImage obj = new SepiaImage(a[1], a[2]);
-      return obj;
-    });
-    knownCommands.put("dither", (a, o)-> {
-      DitherImage obj = new DitherImage(a[1], a[2]);
-      return obj;
-    });
+    knownCommands.put("blur", (a, o) -> new BlurImage(a[1], a[2]));
+    knownCommands.put("sharpen", (a, o) -> new SharpenImage(a[1], a[2]));
+    knownCommands.put("sepia", (a, o) -> new SepiaImage(a[1], a[2]));
+    knownCommands.put("dither", (a, o) -> new DitherImage(a[1], a[2]));
+    knownCommands.put("greyscale", (a, o) -> new CreateNewGreyscale(a[1], a[2]));
 
     NewImageManipulationsCmd c;
     BiFunction<String[], PrintStream, NewImageManipulationsCmd> cmd =
@@ -71,6 +63,9 @@ public class ExtendedImageManipulationsControllerImpl extends ImageManipulations
       String str = c.getClass().getSimpleName();
       if (factory != null)
         model = factory.getModel(fileExtension);
+      if (model == null) {
+        throw new IllegalArgumentException("Model not loaded!");
+      }
       boolean success = c.go(model);
       if (success)
         outputStream.print(str + " successful!\n");

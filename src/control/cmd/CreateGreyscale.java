@@ -1,16 +1,31 @@
 package control.cmd;
-import control.*;
-import model.*;
 
+import control.ImageManipulationsCmd;
+import model.ImageManipulationsModel;
+
+/**
+ * Create greyscale image command.
+ */
 public class CreateGreyscale implements ImageManipulationsCmd {
 
-  String componentType;
-  String sourceImageName;
-  String destinationImageName;
+  private final String componentType;
+  private final String sourceImageName;
+  private final String destinationImageName;
 
+  /**
+   * Constructor for create greyscale image command.
+   *
+   * @param componentType Type of greyscaling to be done.
+   * @param sourceImageName Source Image name that needs to be greyscaled.
+   * @param destinationImageName Destination Image name that is obtained after greyscaling.
+   */
   public CreateGreyscale(String componentType,
-                       String sourceImageName,
-                       String destinationImageName) {
+                         String sourceImageName,
+                         String destinationImageName) throws IllegalArgumentException {
+    if (componentType.isEmpty() || sourceImageName.isEmpty() || destinationImageName.isEmpty()) {
+      throw new IllegalArgumentException("Invalid arguments passed!");
+    }
+
     this.componentType = componentType;
     this.sourceImageName = sourceImageName;
     this.destinationImageName = destinationImageName;
@@ -18,9 +33,6 @@ public class CreateGreyscale implements ImageManipulationsCmd {
 
   @Override
   public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
-    if (m == null){
-      throw new IllegalArgumentException("Model not loaded!");
-    }
     m.createGreyScale(componentType, sourceImageName, destinationImageName);
     return true;
   }

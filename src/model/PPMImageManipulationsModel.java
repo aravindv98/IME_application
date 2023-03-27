@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 /**
- * This class implements the ImageManipulationsModel interface.
- * It performs different kinds of supported operations on a PPM image.
+ * This class extends the AbstractImageManipulationsModel class.
+ * It performs different unique kinds of supported operations on a PPM image.
  */
 public class PPMImageManipulationsModel extends AbstractImageManipulationsModel {
 

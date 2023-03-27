@@ -1,16 +1,31 @@
 package control.cmd;
-import control.*;
-import model.*;
 
+import control.ImageManipulationsCmd;
+import model.ImageManipulationsModel;
+
+/**
+ * Brighten image command.
+ */
 public class BrightenImage implements ImageManipulationsCmd {
 
-  int increment;
-  String sourceImageName;
-  String destImageName;
+  private final int increment;
+  private final String sourceImageName;
+  private final String destImageName;
 
+  /**
+   * Constructor for brighten image command.
+   *
+   * @param increment Increment to be done.
+   * @param sourceImageName Source Image name that needs to be brightened.
+   * @param destImageName Destination Image name that is obtained after brightened.
+   */
   public BrightenImage(int increment,
-    String sourceImageName,
-    String destImageName) {
+                       String sourceImageName,
+                       String destImageName) throws IllegalArgumentException {
+    if (increment == 0 || sourceImageName.isEmpty() || destImageName.isEmpty()) {
+      throw new IllegalArgumentException("Invalid arguments passed!");
+    }
+
     this.increment = increment;
     this.sourceImageName = sourceImageName;
     this.destImageName = destImageName;
@@ -18,9 +33,6 @@ public class BrightenImage implements ImageManipulationsCmd {
 
   @Override
   public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
-    if (m == null){
-      throw new IllegalArgumentException("Model not loaded!");
-    }
     m.brighten(increment, sourceImageName, destImageName);
     return true;
   }

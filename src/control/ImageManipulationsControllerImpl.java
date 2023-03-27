@@ -10,13 +10,18 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
+import control.cmd.BrightenImage;
+import control.cmd.CreateGreyscale;
+import control.cmd.CreateNewGreyscale;
+import control.cmd.HorizontalFlip;
+import control.cmd.LoadImage;
+import control.cmd.RGBCombine;
+import control.cmd.RGBSplit;
+import control.cmd.SaveImage;
+import control.cmd.VerticalFlip;
 import model.IImageManipulationsModelFactory;
 import model.ImageManipulationsModel;
-import control.cmd.*;
-import model.ImageManipulationsModelFactory;
-import model.NewImageManipulationsModel;
 
 /**
  * This class implements the ImageManipulationsController interface.
@@ -25,9 +30,7 @@ import model.NewImageManipulationsModel;
 public class ImageManipulationsControllerImpl implements ImageManipulationsController {
 
   private final OutputStream out;
-
   private final InputStream in;
-
   ImageManipulationsModel model;
 
   IImageManipulationsModelFactory factory;
@@ -48,7 +51,7 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
   }
 
   public ImageManipulationsControllerImpl(IImageManipulationsModelFactory factory,
-                                                  OutputStream out, InputStream in) {
+                                          OutputStream out, InputStream in) {
     this(out, in);
     this.factory = factory;
   }
@@ -98,46 +101,27 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     Map<String, BiFunction<String[], PrintStream, ImageManipulationsCmd>> knownCommands =
             new HashMap<>();
 
-    knownCommands.put("brighten", (a, o)-> {
-      BrightenImage obj = new BrightenImage(Integer.parseInt(a[1]), a[2], a[3]);
-      return obj;
+    knownCommands.put("brighten", (a, o) -> new BrightenImage(Integer.parseInt(a[1]), a[2], a[3]));
+    knownCommands.put("vertical-flip", (a, o) -> new VerticalFlip(a[1], a[2]));
+    knownCommands.put("horizontal-flip", (a, o) -> new HorizontalFlip(a[1], a[2]));
+    knownCommands.put("rgb-split", (a, o) -> new RGBSplit(a[1], a[2], a[3], a[4]));
+    knownCommands.put("rgb-combine", (a, o) -> new RGBCombine(a[1], a[2], a[3], a[4]));
+
+    knownCommands.put("greyscale", (a, o) -> {
+      if (a.length == 4)
+        return new CreateGreyscale(a[1], a[2], a[3]);
+
+      return null;
     });
 
-    knownCommands.put("vertical-flip", (a, o)-> {
-      VerticalFlip obj = new VerticalFlip(a[1], a[2]);
-      return obj;
-    });
-
-    knownCommands.put("horizontal-flip", (a, o)-> {
-      HorizontalFlip obj = new HorizontalFlip(a[1], a[2]);
-      return obj;
-    });
-
-    knownCommands.put("load", (a, o)-> {
+    knownCommands.put("load", (a, o) -> {
       fileExtension = a[1];
-      LoadImage obj = new LoadImage(a[1], a[2], o);
-      return obj;
+      return new LoadImage(a[1], a[2], o);
     });
 
-    knownCommands.put("save", (a, o)-> {
+    knownCommands.put("save", (a, o) -> {
       fileExtension = a[1];
-      SaveImage obj = new SaveImage(a[1], a[2], o);
-      return obj;
-    });
-
-    knownCommands.put("greyscale", (a, o)-> {
-      CreateGreyscale obj = new CreateGreyscale(a[1], a[2], a[3]);
-      return obj;
-    });
-
-    knownCommands.put("rgb-split", (a, o)-> {
-      RGBSplit obj = new RGBSplit(a[1], a[2], a[3], a[4]);
-      return obj;
-    });
-
-    knownCommands.put("rgb-combine", (a, o)-> {
-      RGBCombine obj = new RGBCombine(a[1], a[2], a[3], a[4]);
-      return obj;
+      return new SaveImage(a[1], a[2], o);
     });
 
     ImageManipulationsCmd c;
@@ -150,6 +134,12 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       return false;
     } else {
       c = cmd.apply(arr, outputStream);
+      if (c==null) {
+        if (this.getClass().getSimpleName().equals("ImageManipulationsControllerImpl")) {
+          throw new IllegalArgumentException("Invalid command entered!");
+        }
+        return false;
+      }
       String str = c.getClass().getSimpleName();
       if (factory != null)
         model = factory.getModel(fileExtension);

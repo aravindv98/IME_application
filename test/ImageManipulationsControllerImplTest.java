@@ -18,7 +18,7 @@ import model.PPMImageManipulationsModel;
 import static org.junit.Assert.assertEquals;
 
 /**
- * This class tests the main working PPMImageManipulation Controller.
+ * This class tests the main working ImageManipulationControllerImpl.
  */
 public class ImageManipulationsControllerImplTest {
 
@@ -46,7 +46,6 @@ public class ImageManipulationsControllerImplTest {
 
   /**
    * Test case to check if invalid path of file is not being accepted.
-   *
    */
   @Test
   public void TestInvalidPath() {
@@ -63,7 +62,6 @@ public class ImageManipulationsControllerImplTest {
 
   /**
    * Test case to check invalid file content.
-   *
    */
   @Test(expected = IllegalArgumentException.class)
   public void TestInvalidFileContent() {
@@ -78,7 +76,6 @@ public class ImageManipulationsControllerImplTest {
 
   /**
    * Test case to check the order of execution as per the script file in the test folder.
-   *
    */
   @Test
   public void TestControllerOrderOfExecution() {

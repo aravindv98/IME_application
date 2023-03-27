@@ -1,7 +1,11 @@
 package control.cmd;
-import control.*;
-import model.*;
 
+import control.ImageManipulationsCmd;
+import model.ImageManipulationsModel;
+
+/**
+ * RGB Combine of image command.
+ */
 public class RGBCombine implements ImageManipulationsCmd {
   String destinationImage;
 
@@ -9,10 +13,23 @@ public class RGBCombine implements ImageManipulationsCmd {
   String greenSourceImageName;
   String blueSourceImageName;
 
+  /**
+   * Constructor for rgb combine image command.
+   *
+   * @param destinationImage Image name obtained after combine.
+   * @param redSourceImageName Red component of image name that needs to be combined.
+   * @param greenSourceImageName Green component of image name that needs to be combined.
+   * @param blueSourceImageName Blue component of image name that needs to be combined.
+   */
   public RGBCombine(String destinationImage,
-                  String redSourceImageName,
-                  String greenSourceImageName,
-                  String blueSourceImageName) {
+                    String redSourceImageName,
+                    String greenSourceImageName,
+                    String blueSourceImageName) throws IllegalArgumentException {
+    if (destinationImage.isEmpty() || redSourceImageName.isEmpty() ||
+            greenSourceImageName.isEmpty() || blueSourceImageName.isEmpty()) {
+      throw new IllegalArgumentException("Invalid arguments passed!");
+    }
+
     this.destinationImage = destinationImage;
     this.redSourceImageName = redSourceImageName;
     this.greenSourceImageName = greenSourceImageName;
@@ -21,9 +38,6 @@ public class RGBCombine implements ImageManipulationsCmd {
 
   @Override
   public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
-    if (m == null){
-      throw new IllegalArgumentException("Model not loaded!");
-    }
     m.rgbCombine(destinationImage, redSourceImageName, greenSourceImageName,
             blueSourceImageName);
     return true;

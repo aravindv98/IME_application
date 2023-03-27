@@ -1,22 +1,33 @@
 package control.cmd;
-import control.*;
-import model.*;
 
+import control.ImageManipulationsCmd;
+import model.ImageManipulationsModel;
+
+/**
+ * Horizontal Flip of image command.
+ */
 public class HorizontalFlip implements ImageManipulationsCmd {
-  String sourceImageName;
-  String destinationImageName;
+  private final String sourceImageName;
+  private final String destinationImageName;
 
+  /**
+   * Constructor for Horizontal Flip of image command.
+   *
+   * @param sourceImageName Source Image name that needs to be horizontally flipped.
+   * @param destinationImageName Destination Image name that is obtained after horizontal flip.
+   */
   public HorizontalFlip(String sourceImageName,
-                         String destinationImageName) {
+                        String destinationImageName) throws IllegalArgumentException {
+    if (sourceImageName.isEmpty() || destinationImageName.isEmpty()) {
+      throw new IllegalArgumentException("Invalid arguments passed!");
+    }
+
     this.sourceImageName = sourceImageName;
     this.destinationImageName = destinationImageName;
   }
 
   @Override
   public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
-    if (m == null){
-      throw new IllegalArgumentException("Model not loaded!");
-    }
     m.horizontalFlip(sourceImageName, destinationImageName);
     return true;
   }

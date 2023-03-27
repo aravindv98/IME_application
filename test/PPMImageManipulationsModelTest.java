@@ -1,13 +1,15 @@
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import model.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import model.ImageManipulationsModel;
+import model.PPMImageManipulationsModel;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
