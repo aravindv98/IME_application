@@ -98,6 +98,10 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
    */
   protected boolean executeModel(String[] arr, PrintStream outputStream)
           throws IllegalArgumentException {
+    if(arr[0].equals("run")){
+      inputFromScriptFile(arr[1]);
+      return true;
+    }
     Map<String, BiFunction<String[], PrintStream, ImageManipulationsCmd>> knownCommands =
             new HashMap<>();
 
@@ -177,13 +181,9 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     Scanner sc = new Scanner(in);
     String line = sc.nextLine();
 
-    while (!line.equals("Q")) {
+    while (!line.toLowerCase().equals("q")) {
       String[] arr = line.split(" ");
       this.executeModel(arr, outputStream);
-
-      if (Objects.equals(arr[0], "run")) {
-        inputFromScriptFile(arr[1]);
-      }
 
       outputStream.println();
       outputStream.println("Enter next command:");
