@@ -9,6 +9,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import model.ConventionalImageManipulationsModel;
+import model.IImageManipulationsModelFactory;
+import model.ImageManipulationsModelFactory;
 import model.NewImageManipulationsModel;
 
 import static org.junit.Assert.assertEquals;
@@ -23,12 +25,15 @@ public class ConventionalImageManipulationsModelTest {
   NewImageManipulationsModel obj;
   OutputStream out;
 
+  ImageManipulationsModelFactory factory;
+
   @Before
   public void setup() {
     out = new ByteArrayOutputStream();
     obj = ConventionalImageManipulationsModel.getInstance();
     obj.loadImage(getImagePath("/test/testData/manhattan-small.png"),
             "manhattan-small", out);
+    factory = new ImageManipulationsModelFactory();
   }
 
   @After
@@ -109,6 +114,103 @@ public class ConventionalImageManipulationsModelTest {
     obj.createGreyScale("manhattan-small",
             "manhattan-small-greyscale-result");
     String result = obj.getImageProperties("manhattan-small-greyscale-result");
+    assertEquals(expected, result);
+  }
+
+  @Test
+  public void pngToBmp() {
+    obj.loadImage(getImagePath("/res/png_to_bmp.bmp"),
+            "png_to_bmp_expected", out);
+    String expected = obj.getImageProperties("png_to_bmp_expected");
+    obj.loadImage(getImagePath("/test/testData/manhattan-small.png"),
+            "manhattan-png", out);
+    Path currentRelativePath = Paths.get("");
+    StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
+    String str = s.append("/res/png_to_bmp_testcase.bmp").toString();
+    obj.saveImage(str,"manhattan-png",out);
+    obj.loadImage(getImagePath("/res/png_to_bmp_testcase.bmp"),"result",out);
+    String result = obj.getImageProperties("result");
+    assertEquals(expected, result);
+  }
+  @Test
+  public void pngToJpg() {
+    obj.loadImage(getImagePath("/res/png_to_jpg.jpg"),
+            "png_to_jpg_expected", out);
+    String expected = obj.getImageProperties("png_to_jpg_expected");
+    obj.loadImage(getImagePath("/test/testData/manhattan-small.png"),
+            "manhattan-png", out);
+    Path currentRelativePath = Paths.get("");
+    StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
+    String str = s.append("/res/png_to_jpg_testcase.jpg").toString();
+    obj.saveImage(str,"manhattan-png",out);
+    obj.loadImage(getImagePath("/res/png_to_jpg_testcase.jpg"),"result",out);
+    String result = obj.getImageProperties("result");
+    assertEquals(expected, result);
+  }
+  @Test
+  public void pngToPpm() {
+    obj = factory.getModel("png_to_ppm.ppm");
+    obj.loadImage(getImagePath("/res/png_to_ppm.ppm"),
+            "png_to_ppm_expected", out);
+    String expected = obj.getImageProperties("png_to_ppm_expected");
+    obj = factory.getModel("manhattan-small.png");
+    obj.loadImage(getImagePath("/test/testData/manhattan-small.png"),
+            "manhattan-png", out);
+    Path currentRelativePath = Paths.get("");
+    StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
+    String str = s.append("/res/png_to_ppm_testcase.ppm").toString();
+    obj = factory.getModel("png_to_ppm_testcase.ppm");
+    obj.saveImage(str,"manhattan-png",out);
+    obj.loadImage(getImagePath("/res/png_to_ppm_testcase.ppm"),"result",out);
+    String result = obj.getImageProperties("result");
+    assertEquals(expected, result);
+  }
+  @Test
+  public void ppmToJpg(){
+    obj = factory.getModel("ppm_to_jpg.jpg");
+    obj.loadImage(getImagePath("/res/ppm_to_jpg.jpg"),
+            "ppm_to_jpg_expected", out);
+    String expected = obj.getImageProperties("ppm_to_jpg_expected");
+    obj = factory.getModel("duck.ppm");
+    obj.loadImage(getImagePath("/src/images/duck.ppm"),
+            "duck-ppm", out);
+    Path currentRelativePath = Paths.get("");
+    StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
+    String str = s.append("/res/ppm_to_jpg_testcase.jpg").toString();
+    obj = factory.getModel("ppm_to_jpg_testcase.jpg");
+    obj.saveImage(str,"duck-ppm",out);
+    obj.loadImage(getImagePath("/res/ppm_to_jpg_testcase.jpg"),"result",out);
+    String result = obj.getImageProperties("result");
+    assertEquals(expected, result);
+  }
+  @Test
+  public void jpgToBmp(){
+    obj.loadImage(getImagePath("/res/jpg_to_bmp.bmp"),
+            "jpg_to_bmp_expected", out);
+    String expected = obj.getImageProperties("jpg_to_bmp_expected");
+    obj.loadImage(getImagePath("/src/images/sample_jpg.jpeg"),
+            "sample-jpeg", out);
+    Path currentRelativePath = Paths.get("");
+    StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
+    String str = s.append("/res/jpg_to_bmp_testcase.bmp").toString();
+    obj.saveImage(str,"sample-jpeg",out);
+    obj.loadImage(getImagePath("/res/jpg_to_bmp_testcase.bmp"),"result",out);
+    String result = obj.getImageProperties("result");
+    assertEquals(expected, result);
+  }
+  @Test
+  public void bmpTojpg(){
+    obj.loadImage(getImagePath("/res/bmp_to_jpg.jpg"),
+            "bmp_to_jpg_expected", out);
+    String expected = obj.getImageProperties("bmp_to_jpg_expected");
+    obj.loadImage(getImagePath("/src/images/blackbuck.bmp"),
+            "sample-bmp", out);
+    Path currentRelativePath = Paths.get("");
+    StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
+    String str = s.append("/res/bmp_to_jpg_testcase.jpg").toString();
+    obj.saveImage(str,"sample-bmp",out);
+    obj.loadImage(getImagePath("/res/bmp_to_jpg_testcase.jpg"),"result",out);
+    String result = obj.getImageProperties("result");
     assertEquals(expected, result);
   }
 }
