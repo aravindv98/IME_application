@@ -98,7 +98,7 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
    */
   protected boolean executeModel(String[] arr, PrintStream outputStream)
           throws IllegalArgumentException {
-    if(arr[0].equals("run")){
+    if (arr[0].equals("run")) {
       inputFromScriptFile(arr[1]);
       return true;
     }
@@ -138,7 +138,7 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       return false;
     } else {
       c = cmd.apply(arr, outputStream);
-      if (c==null) {
+      if (c == null) {
         if (this.getClass().getSimpleName().equals("ImageManipulationsControllerImpl")) {
           throw new IllegalArgumentException("Invalid command entered!");
         }

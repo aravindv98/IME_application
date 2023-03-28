@@ -17,7 +17,7 @@ public class SimpleImageManipulations {
    */
   public static void main(String[] args) throws IllegalArgumentException {
 
-    if (args.length > 1) {
+    if (args.length > 2) {
       throw new IllegalArgumentException("Invalid number of arguments passed!");
     }
 
@@ -43,7 +43,12 @@ public class SimpleImageManipulations {
     if (args.length == 0) {
       controller.inputFromUserCommands(); // Calls the main controller.
     } else {
-      controller.inputFromScriptFile(args[0]); // Calls the main controller.
+      if (args[0].equals("-file")) {
+        controller.inputFromScriptFile(args[1]); // Calls the main controller.
+      } else {
+        throw new IllegalArgumentException("Invalid argument entered for" +
+                "running a script!");
+      }
     }
   }
 }
