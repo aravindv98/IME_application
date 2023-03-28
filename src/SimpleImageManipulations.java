@@ -32,7 +32,12 @@ public class SimpleImageManipulations {
     if (args.length == 0) {
       controller.inputFromUserCommands(); // Calls the main controller.
     } else {
-      controller.inputFromScriptFile(args[0]); // Calls the main controller.
+      if (args[0].equals("-file")) {
+        controller.inputFromScriptFile(args[1]); // Calls the main controller.
+      } else {
+        throw new IllegalArgumentException("Invalid argument entered for" +
+                "running a script!");
+      }
     }*/
 
     // New Caller code
