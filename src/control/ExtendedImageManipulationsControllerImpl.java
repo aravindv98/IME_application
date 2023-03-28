@@ -73,4 +73,13 @@ public class ExtendedImageManipulationsControllerImpl extends ImageManipulations
       return true;
     }
   }
+
+  protected void printMenu(PrintStream out) {
+    super.printMenu(out);
+    out.print("blur sourceImage destinationImageName" + System.lineSeparator());
+    out.print("sharpen sourceImage destinationImageName" + System.lineSeparator());
+    out.print("sepia sourceImage destinationImageName" + System.lineSeparator());
+    out.print("dither sourceImage destinationImageName" + System.lineSeparator());
+    out.print("greyscale sourceImage destinationImageName" + System.lineSeparator());
+  }
 }

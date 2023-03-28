@@ -170,7 +170,10 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
   @Override
   public void inputFromUserCommands() throws IllegalArgumentException {
     PrintStream outputStream = new PrintStream(this.out);
-    outputStream.println("Enter user command for PPM image manipulation and Q to Quit:");
+    this.welcomeMessage(outputStream);
+
+    outputStream.println(System.lineSeparator() +
+            "Enter user command for PPM image manipulation and Q to Quit:");
     Scanner sc = new Scanner(in);
     String line = sc.nextLine();
 
@@ -187,6 +190,36 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       line = sc.nextLine();
     }
 
-    outputStream.println("Execution of commands stopped!");
+    this.farewellMessage(outputStream);
+  }
+
+  protected void printMenu(PrintStream out) {
+    out.print("Supported user instructions are: " + System.lineSeparator());
+    out.print("load imagePath imageName"
+            + System.lineSeparator());
+    out.print("save imagePath imageName"
+            + System.lineSeparator());
+    out.print("brighten increment sourceImage destinationImageName" + System.lineSeparator());
+    out.print("vertical-flip sourceImage destinationImageName" + System.lineSeparator());
+    out.print("horizontal-flip sourceImage destinationImageName" + System.lineSeparator());
+    out.print("greyscale component-type sourceImage destinationImageName"
+            + System.lineSeparator());
+    out.print("rgb-combine destinationImageName sourceRedComponentImage sourceGreenComponentImage "
+            + "sourceBlueComponentImage"
+            + System.lineSeparator());
+    out.print("rgb-split sourceImageName destinationRedComponentImage "
+            + "destinationGreenComponentImage "
+            + "destinationBlueComponentImage"
+            + System.lineSeparator());
+  }
+
+  protected void welcomeMessage(PrintStream out) {
+    out.print(System.lineSeparator() + "Welcome to the image processing program!"
+            + System.lineSeparator());
+    printMenu(out);
+  }
+
+  private void farewellMessage(PrintStream out) {
+    out.print("Thank you for using this program!");
   }
 }
