@@ -44,67 +44,67 @@ greyscale green-component manhattan manhattan-greyscale-green
 greyscale blue-component manhattan manhattan-greyscale-blue
 
 #save manhattan-brighter
-save manhattan-brighter-by-50.png manhattan-brighter-by-50
+save ../res/manhattan-brighter-by-50.png manhattan-brighter-by-50
 
 #save manhattan-greyscale-value
-save manhattan-greyscale-value.png manhattan-greyscale-value
+save ../res/manhattan-greyscale-value.png manhattan-greyscale-value
 
 #save manhattan-greyscale-intensity
-save manhattan-greyscale-intensity.png manhattan-greyscale-intensity
+save ../res/manhattan-greyscale-intensity.png manhattan-greyscale-intensity
 
 #save manhattan-greyscale-luma
-save manhattan-greyscale-luma.png manhattan-greyscale-luma
+save ../res/manhattan-greyscale-luma.png manhattan-greyscale-luma
 
 #save manhattan-greyscale-red
-save manhattan-greyscale-red.png manhattan-greyscale-red
+save ../res/manhattan-greyscale-red.png manhattan-greyscale-red
 
 #save manhattan-greyscale-green
-save manhattan-greyscale-green.png manhattan-greyscale-green
+save ../res/manhattan-greyscale-green.png manhattan-greyscale-green
 
 #save manhattan-greyscale-blue
-save manhattan-greyscale-blue.png manhattan-greyscale-blue
+save ../res/manhattan-greyscale-blue.png manhattan-greyscale-blue
 
 #save manhattan-vertical
-save manhattan-vertical.png manhattan-vertical
+save ../res/manhattan-vertical.png manhattan-vertical
 
 #save manhattan-vertical-horizontal
-save manhattan-vertical-horizontal.png manhattan-vertical-horizontal
+save ../res/manhattan-vertical-horizontal.png manhattan-vertical-horizontal
 
 #split the manhattan image
 rgb-split manhattan manhattan-red manhattan-green manhattan-blue
 
 #save manhattan-red
-save manhattan-red.png manhattan-red
+save ../res/manhattan-red.png manhattan-red
 
 #save manhattan-green
-save manhattan-green.png manhattan-green
+save ../res/manhattan-green.png manhattan-green
 
 #save manhattan-blue
-save manhattan-blue.png manhattan-blue
+save ../res/manhattan-blue.png manhattan-blue
 
 #combine the manhattan images
 rgb-combine manhattan-combine manhattan-red manhattan-green manhattan-blue
 
 #save manhattan-combine
-save manhattan-combine.png manhattan-combine
+save ../res/manhattan-combine.png manhattan-combine
 
 #overwrite manhattan with another file
 load ../src/images/Test_Image.ppm manhattan
 
 #save manhattan-blur
-save manhattan-blur.png manhattan-blur
+save ../res/manhattan-blur.png manhattan-blur
 
 #save manhattan-sharpen
-save manhattan-sharpen.png manhattan-sharpen
+save ../res/manhattan-sharpen.png manhattan-sharpen
 
 #save manhattan-greyscaled
-save manhattan-greyscaled.png manhattan-greyscaled
+save ../res/manhattan-greyscaled.png manhattan-greyscaled
 
 #save manhattan-sepia
-save manhattan-sepia.png manhattan-sepia
+save ../res/manhattan-sepia.png manhattan-sepia
 
 #save manhattan-dither
-save manhattan-dither.png manhattan-dither
+save ../res/manhattan-dither.png manhattan-dither
 
 
 ###### Saving from one file format to another ############
@@ -113,49 +113,49 @@ save manhattan-dither.png manhattan-dither
 load ../src/images/blackbuck.bmp blackbuck
 
 #save bmp to jpg
-save bmp_to_jpg.jpg blackbuck
+save ../res/bmp_to_jpg.jpg blackbuck
 
 #save bmp to png
-save bmp_to_png.png blackbuck
+save ../res/bmp_to_png.png blackbuck
 
 #save bmp to ppm
-save bmp_to_ppm.ppm blackbuck
+save ../res/bmp_to_ppm.ppm blackbuck
 
 #load manhattan-small.png and call it 'manhattan'
 load ../src/images/manhattan-small.png manhattan
 
 #save png to bmp
-save png_to_bmp.bmp manhattan
+save ../res/png_to_bmp.bmp manhattan
 
 #save png to jpg
-save png_to_jpg.jpg manhattan
+save ../res/png_to_jpg.jpg manhattan
 
 #save png to ppm
-save png_to_ppm.ppm manhattan
+save ../res/png_to_ppm.ppm manhattan
 
 #load sample_jpeg.jpeg
 load ../src/images/sample_jpg.jpeg sample_jpeg
 
 #save jpg to bmp
-save jpg_to_bmp.bmp sample_jpeg
+save ../res/jpg_to_bmp.bmp sample_jpeg
 
 #save jpg to png
-save jpg_to_png.png sample_jpeg
+save ../res/pg_to_png.png sample_jpeg
 
 #save jpg to ppm
-save jpg_to_ppm.ppm sample_jpeg
+save ../res/jpg_to_ppm.ppm sample_jpeg
 
 #load duck.ppm and call it 'duck'
 load ../src/images/duck.ppm duck
 
 #save ppm to jpg
-save ppm_to_jpg.jpg duck
+save ../res/ppm_to_jpg.jpg duck
 
 #save ppm to bmp
-save ppm_to_bmp.bmp duck
+save ../res/ppm_to_bmp.bmp duck
 
 #save ppm to png
-save ppm_to_png.png duck
+save ../res/ppm_to_png.png duck
 
 
 ######################################
