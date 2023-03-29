@@ -14,11 +14,11 @@ public class CreateNewGreyscale implements NewImageManipulationsCmd {
   /**
    * Constructor for create greyscale image command.
    *
-   * @param sourceImageName Source Image name that needs to be greyscaled.
+   * @param sourceImageName      Source Image name that needs to be greyscaled.
    * @param destinationImageName Destination Image name that is obtained after greyscaling.
    */
   public CreateNewGreyscale(String sourceImageName,
-                         String destinationImageName) throws IllegalArgumentException {
+                            String destinationImageName) throws IllegalArgumentException {
     if (sourceImageName.isEmpty() || destinationImageName.isEmpty()) {
       throw new IllegalArgumentException("Invalid arguments passed!");
     }

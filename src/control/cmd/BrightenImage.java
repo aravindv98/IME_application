@@ -15,9 +15,9 @@ public class BrightenImage implements ImageManipulationsCmd {
   /**
    * Constructor for brighten image command.
    *
-   * @param increment Increment to be done.
+   * @param increment       Increment to be done.
    * @param sourceImageName Source Image name that needs to be brightened.
-   * @param destImageName Destination Image name that is obtained after brightened.
+   * @param destImageName   Destination Image name that is obtained after brightened.
    */
   public BrightenImage(int increment,
                        String sourceImageName,

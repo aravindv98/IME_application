@@ -18,7 +18,7 @@ public class LoadImage implements ImageManipulationsCmd {
    *
    * @param imagePath Image path from where to load.
    * @param imageName Image name which can be used to refer to the image in the future.
-   * @param out OutputStream object used for printing exception information.
+   * @param out       OutputStream object used for printing exception information.
    */
   public LoadImage(String imagePath,
                    String imageName,

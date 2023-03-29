@@ -15,8 +15,8 @@ public class CreateGreyscale implements ImageManipulationsCmd {
   /**
    * Constructor for create greyscale image command.
    *
-   * @param componentType Type of greyscaling to be done.
-   * @param sourceImageName Source Image name that needs to be greyscaled.
+   * @param componentType        Type of greyscaling to be done.
+   * @param sourceImageName      Source Image name that needs to be greyscaled.
    * @param destinationImageName Destination Image name that is obtained after greyscaling.
    */
   public CreateGreyscale(String componentType,

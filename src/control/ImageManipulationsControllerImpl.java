@@ -38,12 +38,25 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
 
   String fileExtension;
 
+  /**
+   * Parameterised constructor for ImageManipulationsControllerImpl class.
+   *
+   * @param out object of OutputStream class.
+   * @param in  object of InputStream class.
+   */
   public ImageManipulationsControllerImpl(OutputStream out,
                                           InputStream in) {
     this.out = out;
     this.in = in;
   }
 
+  /**
+   * Parameterised constructor for ImageManipulationsControllerImpl class.
+   *
+   * @param model object of ImageManipulationsModel interface.
+   * @param out   object of OutputStream class.
+   * @param in    object of InputStream class.
+   */
   public ImageManipulationsControllerImpl(ImageManipulationsModel model,
                                           OutputStream out,
                                           InputStream in) {
@@ -51,6 +64,13 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     this.model = model;
   }
 
+  /**
+   * Parameterised constructor for ImageManipulationsControllerImpl class.
+   *
+   * @param factory object of IImageManipulationsModelFactory interface.
+   * @param out     object of OutputStream class.
+   * @param in      object of InputStream class.
+   */
   public ImageManipulationsControllerImpl(IImageManipulationsModelFactory factory,
                                           OutputStream out, InputStream in) {
     this(out, in);
@@ -158,8 +178,7 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
           if (ImageUtil.writeFile(fileExtension, arr[1], outputStream)) {
             outputStream.print(str + " successful!\n");
           }
-        }
-        else {
+        } else {
           outputStream.print(str + " successful!\n");
         }
       }

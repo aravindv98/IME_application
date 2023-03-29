@@ -16,10 +16,10 @@ public class RGBCombine implements ImageManipulationsCmd {
   /**
    * Constructor for rgb combine image command.
    *
-   * @param destinationImage Image name obtained after combine.
-   * @param redSourceImageName Red component of image name that needs to be combined.
+   * @param destinationImage     Image name obtained after combine.
+   * @param redSourceImageName   Red component of image name that needs to be combined.
    * @param greenSourceImageName Green component of image name that needs to be combined.
-   * @param blueSourceImageName Blue component of image name that needs to be combined.
+   * @param blueSourceImageName  Blue component of image name that needs to be combined.
    */
   public RGBCombine(String destinationImage,
                     String redSourceImageName,

@@ -8,7 +8,8 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 
 /**
- * This class contains all the common functions supported for both PPM and conventional images.
+ * This class contains all the common image processing functions
+ * supported for both PPM and conventional images.
  */
 public abstract class AbstractImageManipulationsModel implements NewImageManipulationsModel {
 
@@ -291,7 +292,7 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
     Pixels obj = imageNamePropertiesMap.get(imageName);
     int width = obj.width;
     int height = obj.height;
-     String[][] listPixels = obj.listOfPixels;
+    String[][] listPixels = obj.listOfPixels;
     StringBuilder pixels = new StringBuilder();
 
     for (int i = 0; i < height; i++) {
@@ -323,8 +324,8 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
           double sum = 0.0;
           for (int u = -1; u <= 1; u++) {
             for (int v = -1; v <= 1; v++) {
-              String arr[] = obj.listOfPixels[i+u][j+v].split(" ");
-              sum += kernel[u+1][v+1] * Integer.parseInt(arr[k]);
+              String arr[] = obj.listOfPixels[i + u][j + v].split(" ");
+              sum += kernel[u + 1][v + 1] * Integer.parseInt(arr[k]);
             }
           }
           outputPixels[i][j][k] = (int) sum;
@@ -365,9 +366,11 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
     Pixels obj = imageNamePropertiesMap.get(imageName);
     Pixels newObj = new Pixels(obj);
 
-    // Define the blur filter
+    // Define the kernel filter for sepia processing.
     double[][] filter = {{0.393, 0.769, 0.189}, {0.349, 0.686, 0.168}, {0.272, 0.534, 0.131}};
 
+    //Apply a 3x3 and 3x1 matrix multiplication where in the resultant new values
+    // of the channels can be obtained.
     for (int y = 0; y < obj.height; y++) {
       for (int x = 0; x < obj.width; x++) {
         String[] arr = obj.listOfPixels[x][y].split(" ");
@@ -391,46 +394,51 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
           throws IllegalArgumentException {
 
     checkIfImagePresentInMap(imageName);
-      this.createGreyScale("luma-component",imageName,
-              "tempLumaForDither");
-      checkIfImagePresentInMap("tempLumaForDither");
+    //Apply luma-component greyscale on the image prior to dither
+    // operation and store temporarily.
+    this.createGreyScale("luma-component", imageName,
+            "tempLumaForDither");
+    checkIfImagePresentInMap("tempLumaForDither");
     Pixels luma = imageNamePropertiesMap.get("tempLumaForDither");
     Pixels dither = new Pixels(luma);
+    // Red component is chosen to perform the calculation of error and the
+    // new value of red obtained in each of the neighboring pixels are used
+    // to populate in all the channels of that given pixel.
     for (int y = 0; y < luma.height; y++) {
-        for (int x = 0; x < luma.width; x++) {
-          String[] arr = luma.listOfPixels[x][y].split(" ");
-          int oldRed = Integer.parseInt(arr[0]);
-          int newRed = oldRed < 128 ? 0 : 255;
-          dither.listOfPixels[x][y] = newRed + " " + newRed + " " + newRed;
-          int error = oldRed - newRed;
-          if(x < luma.width -1){
-            String[] neighborRow = luma.listOfPixels[x+1][y].split(" ");
-            int neighborRed = Integer.parseInt(neighborRow[0]);
-            int calculatedRed = neighborRed + error * 7/16;
-            luma.listOfPixels[x+1][y] = calculatedRed + " " + calculatedRed +
-                    " " + calculatedRed;
-          }
-          if(x > 0 && y < luma.height - 1) {
-            String[] neighborRow = luma.listOfPixels[x-1][y+1].split(" ");
-            int neighborRed = Integer.parseInt(neighborRow[0]);
-            int calculatedRed = neighborRed + error * 3/16;
-            luma.listOfPixels[x-1][y+1] = calculatedRed + " " + calculatedRed +
-                    " " + calculatedRed;
-          }
-          if(y < luma.height - 1){
-            String[] neighborRow = luma.listOfPixels[x][y+1].split(" ");
-            int neighborRed = Integer.parseInt(neighborRow[0]);
-            int calculatedRed = neighborRed + error * 5/16;
-            luma.listOfPixels[x][y+1] = calculatedRed + " " + calculatedRed +
-                    " " + calculatedRed;
-          }
-          if(x < luma.width - 1 && y < luma.height - 1){
-            String[] neighborRow = luma.listOfPixels[x+1][y+1].split(" ");
-            int neighborRed = Integer.parseInt(neighborRow[0]);
-            int calculatedRed = neighborRed + error * 1/16;
-            luma.listOfPixels[x+1][y+1] = calculatedRed + " " + calculatedRed +
-                    " " + calculatedRed;
-          }
+      for (int x = 0; x < luma.width; x++) {
+        String[] arr = luma.listOfPixels[x][y].split(" ");
+        int oldRed = Integer.parseInt(arr[0]);
+        int newRed = oldRed < 128 ? 0 : 255;
+        dither.listOfPixels[x][y] = newRed + " " + newRed + " " + newRed;
+        int error = oldRed - newRed;
+        if (x < luma.width - 1) {
+          String[] neighborRow = luma.listOfPixels[x + 1][y].split(" ");
+          int neighborRed = Integer.parseInt(neighborRow[0]);
+          int calculatedRed = neighborRed + error * 7 / 16;
+          luma.listOfPixels[x + 1][y] = calculatedRed + " " + calculatedRed +
+                  " " + calculatedRed;
+        }
+        if (x > 0 && y < luma.height - 1) {
+          String[] neighborRow = luma.listOfPixels[x - 1][y + 1].split(" ");
+          int neighborRed = Integer.parseInt(neighborRow[0]);
+          int calculatedRed = neighborRed + error * 3 / 16;
+          luma.listOfPixels[x - 1][y + 1] = calculatedRed + " " + calculatedRed +
+                  " " + calculatedRed;
+        }
+        if (y < luma.height - 1) {
+          String[] neighborRow = luma.listOfPixels[x][y + 1].split(" ");
+          int neighborRed = Integer.parseInt(neighborRow[0]);
+          int calculatedRed = neighborRed + error * 5 / 16;
+          luma.listOfPixels[x][y + 1] = calculatedRed + " " + calculatedRed +
+                  " " + calculatedRed;
+        }
+        if (x < luma.width - 1 && y < luma.height - 1) {
+          String[] neighborRow = luma.listOfPixels[x + 1][y + 1].split(" ");
+          int neighborRed = Integer.parseInt(neighborRow[0]);
+          int calculatedRed = neighborRed + error * 1 / 16;
+          luma.listOfPixels[x + 1][y + 1] = calculatedRed + " " + calculatedRed +
+                  " " + calculatedRed;
+        }
       }
     }
     imageNamePropertiesMap.put(destinationImageName, dither);
@@ -440,7 +448,7 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   public void sharpen(String imageName, String destinationImageName)
           throws IllegalArgumentException {
     double[][] kernel = {{-0.125, -0.125, -0.125},
-            {-0.125,  2.0,   -0.125},
+            {-0.125, 2.0, -0.125},
             {-0.125, -0.125, -0.125}};
 
     applyFilter(kernel, imageName, destinationImageName);

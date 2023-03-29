@@ -15,7 +15,7 @@ public class BlurImage implements NewImageManipulationsCmd {
    * Constructor for blur image command.
    *
    * @param sourceImageName Source Image name that needs to be blurred.
-   * @param destImageName Destination Image name that is obtained after blurring.
+   * @param destImageName   Destination Image name that is obtained after blurring.
    */
   public BlurImage(String sourceImageName,
                    String destImageName) throws IllegalArgumentException {

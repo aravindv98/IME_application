@@ -16,7 +16,7 @@ public class SharpenImage implements NewImageManipulationsCmd {
    * Constructor for Sharpening of image command.
    *
    * @param sourceImageName Source Image name that needs to be sharpened.
-   * @param destImageName Destination Image name that is obtained after sharpening.
+   * @param destImageName   Destination Image name that is obtained after sharpening.
    */
   public SharpenImage(String sourceImageName,
                       String destImageName) throws IllegalArgumentException {

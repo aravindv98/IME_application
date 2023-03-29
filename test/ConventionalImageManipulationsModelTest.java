@@ -148,11 +148,11 @@ public class ConventionalImageManipulationsModelTest {
     Path currentRelativePath = Paths.get("");
     StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
     String str = s.append("/res/png_to_bmp_testcase.bmp").toString();
-    obj.saveImage(str,"manhattan-png",out);
+    obj.saveImage(str, "manhattan-png", out);
     ImageUtil.readFile(out,
             getImagePath("/res/png_to_bmp_testcase.bmp"),
             "bmp");
-    obj.loadImage(getImagePath("/res/png_to_bmp_testcase.bmp"),"result",out);
+    obj.loadImage(getImagePath("/res/png_to_bmp_testcase.bmp"), "result", out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
   }
@@ -176,16 +176,17 @@ public class ConventionalImageManipulationsModelTest {
     StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
     String str = s.append("/res/png_to_ppm_testcase.ppm").toString();
     obj = factory.getModel("ppm");
-    obj.saveImage(str,"manhattan-png",out);
+    obj.saveImage(str, "manhattan-png", out);
     ImageUtil.readFile(out,
             getImagePath("/res/png_to_ppm_testcase.ppm"),
             "ppm");
-    obj.loadImage(getImagePath("/res/png_to_ppm_testcase.ppm"),"result",out);
+    obj.loadImage(getImagePath("/res/png_to_ppm_testcase.ppm"), "result", out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
   }
+
   @Test
-  public void jpgToBmp(){
+  public void jpgToBmp() {
     ImageUtil.readFile(out,
             getImagePath("/res/jpg_to_bmp.bmp"),
             "bmp");
@@ -200,11 +201,11 @@ public class ConventionalImageManipulationsModelTest {
     Path currentRelativePath = Paths.get("");
     StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
     String str = s.append("/res/jpg_to_bmp_testcase.bmp").toString();
-    obj.saveImage(str,"sample-jpeg",out);
+    obj.saveImage(str, "sample-jpeg", out);
     ImageUtil.readFile(out,
             getImagePath("/res/jpg_to_bmp_testcase.bmp"),
             "bmp");
-    obj.loadImage(getImagePath("/res/jpg_to_bmp_testcase.bmp"),"result",out);
+    obj.loadImage(getImagePath("/res/jpg_to_bmp_testcase.bmp"), "result", out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
   }

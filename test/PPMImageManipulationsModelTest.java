@@ -81,7 +81,7 @@ public class PPMImageManipulationsModelTest {
   /**
    * Test case to check if a file is being loaded from an invalid path or not.
    */
-  @Test (expected = IllegalArgumentException.class)
+  @Test(expected = IllegalArgumentException.class)
   public void InvalidFilePathLoad() {
     ImageUtil.readFile(out, getImagePath("/test/testData/Test_Erro_Image.ppm"),
             "ppm");

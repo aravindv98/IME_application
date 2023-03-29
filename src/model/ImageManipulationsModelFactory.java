@@ -9,8 +9,7 @@ public class ImageManipulationsModelFactory implements IImageManipulationsModelF
   public <T extends ImageManipulationsModel> T getModel(String fileExtension) {
     if (fileExtension.equalsIgnoreCase("ppm")) {
       return (T) PPMImageManipulationsModel.getInstance();
-    }
-    else {
+    } else {
       return (T) ConventionalImageManipulationsModel.getInstance();
     }
   }

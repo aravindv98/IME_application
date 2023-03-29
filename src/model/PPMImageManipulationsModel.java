@@ -26,7 +26,7 @@ public class PPMImageManipulationsModel extends AbstractImageManipulationsModel 
 
   /**
    * Constructor of ImageManipulationsModel.
-   * It only role right now is to intialize the hash-map.
+   * It only role right now is to initialize the hash-map.
    */
   protected PPMImageManipulationsModel() {
     super();

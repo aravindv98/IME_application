@@ -15,7 +15,7 @@ public class DitherImage implements NewImageManipulationsCmd {
    * Constructor for dither image command.
    *
    * @param sourceImageName Source Image name that needs to be dithered.
-   * @param destImageName Destination Image name that is obtained after dithering.
+   * @param destImageName   Destination Image name that is obtained after dithering.
    */
   public DitherImage(String sourceImageName,
                      String destImageName) throws IllegalArgumentException {

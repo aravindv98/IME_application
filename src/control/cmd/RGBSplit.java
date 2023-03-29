@@ -15,10 +15,10 @@ public class RGBSplit implements ImageManipulationsCmd {
   /**
    * Constructor for rgb split image command.
    *
-   * @param imageName Image name that needs to be split.
-   * @param redDestinationImageName Image name which after splitting red component.
+   * @param imageName                 Image name that needs to be split.
+   * @param redDestinationImageName   Image name which after splitting red component.
    * @param greenDestinationImageName Image name which after splitting green component.
-   * @param blueDestinationImageName Image name which after splitting blue component.
+   * @param blueDestinationImageName  Image name which after splitting blue component.
    */
   public RGBSplit(String imageName,
                   String redDestinationImageName,

@@ -13,7 +13,7 @@ public class HorizontalFlip implements ImageManipulationsCmd {
   /**
    * Constructor for Horizontal Flip of image command.
    *
-   * @param sourceImageName Source Image name that needs to be horizontally flipped.
+   * @param sourceImageName      Source Image name that needs to be horizontally flipped.
    * @param destinationImageName Destination Image name that is obtained after horizontal flip.
    */
   public HorizontalFlip(String sourceImageName,

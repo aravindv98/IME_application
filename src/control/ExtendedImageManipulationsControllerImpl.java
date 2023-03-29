@@ -28,8 +28,8 @@ public class ExtendedImageManipulationsControllerImpl extends ImageManipulations
    * It only role right now is to intialize the factory object.
    *
    * @param factory factory object used to get the model.
-   * @param out OutputStream object.
-   * @param in InputStream Object.
+   * @param out     OutputStream object.
+   * @param in      InputStream Object.
    */
   public ExtendedImageManipulationsControllerImpl(IImageManipulationsModelFactory factory,
                                                   OutputStream out, InputStream in) {

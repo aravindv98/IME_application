@@ -12,7 +12,7 @@ public interface NewImageManipulationsModel extends ImageManipulationsModel {
    * @param destinationImageName the name of the image after creating sepia.
    */
   void sepia(String imageName,
-                       String destinationImageName) throws IllegalArgumentException;
+             String destinationImageName) throws IllegalArgumentException;
 
   /**
    * Creates a dither image.
@@ -21,7 +21,7 @@ public interface NewImageManipulationsModel extends ImageManipulationsModel {
    * @param destinationImageName the name of the image after creating dither.
    */
   void dither(String imageName,
-             String destinationImageName) throws IllegalArgumentException;
+              String destinationImageName) throws IllegalArgumentException;
 
   /**
    * Creates a greyscale image.
@@ -49,5 +49,5 @@ public interface NewImageManipulationsModel extends ImageManipulationsModel {
    * @param destinationImageName the name of the image after creating sharpened image.
    */
   void sharpen(String imageName,
-             String destinationImageName) throws IllegalArgumentException;
+               String destinationImageName) throws IllegalArgumentException;
 }

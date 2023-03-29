@@ -13,7 +13,7 @@ public class VerticalFlip implements ImageManipulationsCmd {
   /**
    * Constructor for Vertical Flip of image command.
    *
-   * @param sourceImageName Source Image name that needs to be vertically flipped.
+   * @param sourceImageName      Source Image name that needs to be vertically flipped.
    * @param destinationImageName Destination Image name that is obtained after vertical flip.
    */
   public VerticalFlip(String sourceImageName,
