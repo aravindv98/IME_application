@@ -28,7 +28,7 @@ public class CreateNewGreyscale implements NewImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(NewImageManipulationsModel m) throws IllegalArgumentException {
     m.createGreyScale(sourceImageName, destinationImageName);
     return true;
   }

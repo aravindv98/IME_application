@@ -41,9 +41,9 @@ public class ExtendedImageManipulationsControllerImpl extends ImageManipulations
   protected boolean executeModel(String[] arr, PrintStream outputStream)
           throws IllegalArgumentException {
     boolean commandExecuted = super.executeModel(arr, outputStream);
-    if (commandExecuted)
+    if (commandExecuted) {
       return true;
-
+    }
     Map<String, BiFunction<String[], PrintStream, NewImageManipulationsCmd>> knownCommands =
             new HashMap<>();
 
@@ -61,15 +61,16 @@ public class ExtendedImageManipulationsControllerImpl extends ImageManipulations
     } else {
       c = cmd.apply(arr, outputStream);
       String str = c.getClass().getSimpleName();
-      if (factory != null)
+      if (factory != null) {
         model = factory.getModel(fileExtension);
+      }
       if (model == null) {
         throw new IllegalArgumentException("Model not loaded!");
       }
-      boolean success = c.go(model);
-      if (success)
+      boolean success = c.execute(model);
+      if (success) {
         outputStream.print(str + " successful!\n");
-
+      }
       return true;
     }
   }

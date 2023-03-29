@@ -7,13 +7,11 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.BiFunction;
 
 import control.cmd.BrightenImage;
 import control.cmd.CreateGreyscale;
-import control.cmd.CreateNewGreyscale;
 import control.cmd.HorizontalFlip;
 import control.cmd.LoadImage;
 import control.cmd.RGBCombine;
@@ -133,16 +131,18 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     knownCommands.put("rgb-combine", (a, o) -> new RGBCombine(a[1], a[2], a[3], a[4]));
 
     knownCommands.put("greyscale", (a, o) -> {
-      if (a.length == 4)
+      if (a.length == 4) {
         return new CreateGreyscale(a[1], a[2], a[3]);
+      }
 
       return null;
     });
 
     knownCommands.put("load", (a, o) -> {
       fileExtension = ImageUtil.getFileExtension(a[1]);
-      if (ImageUtil.readFile(o, a[1], fileExtension))
+      if (ImageUtil.readFile(o, a[1], fileExtension)) {
         return new LoadImage(a[1], a[2], o);
+      }
 
       return null;
     });
@@ -170,9 +170,10 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
         return false;
       }
       String str = c.getClass().getSimpleName();
-      if (factory != null)
+      if (factory != null) {
         model = factory.getModel(fileExtension);
-      boolean success = c.go(model);
+      }
+      boolean success = c.execute(model);
       if (success) {
         if (str.equals("SaveImage")) {
           if (ImageUtil.writeFile(fileExtension, arr[1], outputStream)) {
@@ -208,8 +209,8 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     PrintStream outputStream = new PrintStream(this.out);
     this.welcomeMessage(outputStream);
 
-    outputStream.println(System.lineSeparator() +
-            "Enter user command for PPM image manipulation and Q to Quit:");
+    outputStream.println(System.lineSeparator()
+            + "Enter user command for PPM image manipulation and Q to Quit:");
     Scanner sc = new Scanner(in);
     String line = sc.nextLine();
 

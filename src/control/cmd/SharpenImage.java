@@ -1,6 +1,6 @@
 package control.cmd;
 
-import control.ImageManipulationsCmd;
+
 import control.NewImageManipulationsCmd;
 import model.NewImageManipulationsModel;
 
@@ -28,7 +28,7 @@ public class SharpenImage implements NewImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(NewImageManipulationsModel m) throws IllegalArgumentException {
     m.sharpen(sourceImageName, destImageName);
     return true;
   }

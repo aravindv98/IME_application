@@ -13,16 +13,28 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+
 import javax.imageio.ImageIO;
 
-
+/**
+ * A class created to handle I/O operations of read and write
+ * of a file.
+ */
 public class ImageUtil {
 
   static HashMap<String, InputStream> inputMap = new HashMap<>();
 
+  /**
+   * A method to convert the buffered image to byte array in order for it
+   * to be processed by load/save methods.
+   *
+   * @param image  containing the image content.
+   * @param format format of the image.
+   * @return the byte array of the file content.
+   * @throws IOException exception thrown in case of any IO issue.
+   */
   public static byte[] toByteArray(BufferedImage image, String format) throws IOException {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     ImageIO.write(image, format, outputStream);
@@ -30,6 +42,13 @@ public class ImageUtil {
   }
 
   // Gets the full image path from the relative path.
+
+  /**
+   * A method to obtain the full path of a file.
+   *
+   * @param path path of the file.
+   * @return the absolute path of the file.
+   */
   public static String getFullImagePath(String path) {
     Path currentPath = Paths.get(path);
     if (!currentPath.isAbsolute()) {
@@ -39,11 +58,25 @@ public class ImageUtil {
     return path;
   }
 
+  /**
+   * A method to return the file extension of a file.
+   *
+   * @param fileName name of the file.
+   * @return the file extension of the file.
+   */
   public static String getFileExtension(String fileName) {
     String[] tokens = fileName.split("\\.(?=[^\\.]+$)");
     return tokens[1];
   }
 
+  /**
+   * A method to read the file.
+   *
+   * @param out           containing the outputstream object.
+   * @param imagePath     path of the image.
+   * @param fileExtension extension of the file.
+   * @return if the file has been successfully read or not.
+   */
   public static boolean readFile(OutputStream out, String imagePath, String fileExtension) {
     InputStream inputStream = null;
     String path = "";
@@ -67,8 +100,7 @@ public class ImageUtil {
       }
 
       inputStream = new ByteArrayInputStream(builder.toString().getBytes());
-    }
-    else {
+    } else {
       try {
         path = getFullImagePath(imagePath);
         File file = new File(path);
@@ -77,8 +109,7 @@ public class ImageUtil {
 
         // Convert byte array to InputStream
         inputStream = new ByteArrayInputStream(bytes);
-      }
-      catch (IOException e) {
+      } catch (IOException e) {
         PrintStream outStream = new PrintStream(out);
         outStream.print("File " + path + " not found!");
         return false;
@@ -89,6 +120,14 @@ public class ImageUtil {
     return true;
   }
 
+  /**
+   * A method to write a file.
+   *
+   * @param fileExtension extension of the file.
+   * @param imagePath     path of the image.
+   * @param out           object of outputstream.
+   * @return if the file has been successfully written or not.
+   */
   public static boolean writeFile(String fileExtension, String imagePath, OutputStream out) {
     String path = "";
     if (fileExtension.equals("ppm")) {
@@ -114,8 +153,7 @@ public class ImageUtil {
         outStream.print("File " + path + " not found!");
         return false;
       }
-    }
-    else {
+    } else {
       File output = new File(getFullImagePath(imagePath));
       try {
         // Create a ByteArrayInputStream from the byte array
@@ -135,10 +173,24 @@ public class ImageUtil {
     return true;
   }
 
+  /**
+   * A method to store the file content in a map for it to be
+   * accessible by the load method.
+   *
+   * @param imagePath path of the image.
+   * @param os        object of inputstream.
+   */
   public static void setInputData(String imagePath, InputStream os) {
     inputMap.put(imagePath, os);
   }
 
+  /**
+   * A method to get the file content by providing the path of the file
+   * as argument.
+   *
+   * @param imagePath path of the image.
+   * @return the inputstream object from the map.
+   */
   public static InputStream getInputData(String imagePath) {
     return inputMap.get(imagePath);
   }

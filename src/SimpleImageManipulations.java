@@ -1,9 +1,6 @@
 import control.ExtendedImageManipulationsControllerImpl;
 import control.ImageManipulationsController;
-import control.ImageManipulationsControllerImpl;
-import model.ImageManipulationsModel;
 import model.ImageManipulationsModelFactory;
-import model.PPMImageManipulationsModel;
 
 /**
  * Contains the main method which is the entry point of our program.

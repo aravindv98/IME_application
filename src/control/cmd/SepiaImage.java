@@ -27,7 +27,7 @@ public class SepiaImage implements NewImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(NewImageManipulationsModel m) throws IllegalArgumentException {
     m.sepia(sourceImageName, destImageName);
     return true;
   }

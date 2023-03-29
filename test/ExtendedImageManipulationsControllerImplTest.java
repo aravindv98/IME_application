@@ -18,7 +18,8 @@ import static org.junit.Assert.assertEquals;
 /**
  * This class tests the main working ExtendedImageManipulationControllerImpl.
  */
-public class ExtendedImageManipulationsControllerImplTest extends ImageManipulationsControllerImplTest {
+public class ExtendedImageManipulationsControllerImplTest
+        extends ImageManipulationsControllerImplTest {
 
   IImageManipulationsModelFactory factory;
 
@@ -136,6 +137,9 @@ public class ExtendedImageManipulationsControllerImplTest extends ImageManipulat
             mockLog.toString());
   }
 
+  /**
+   * A mock model class created to test the flow of the controller.
+   */
   public class NewMockModel extends ImageManipulationsControllerImplTest.MockModel
           implements NewImageManipulationsModel {
 
@@ -144,12 +148,14 @@ public class ExtendedImageManipulationsControllerImplTest extends ImageManipulat
     }
 
     @Override
-    public void sepia(String imageName, String destinationImageName) throws IllegalArgumentException {
+    public void sepia(String imageName,
+                      String destinationImageName) throws IllegalArgumentException {
       log.append("Received inputs ").append(imageName).append(" and ").append(destinationImageName);
     }
 
     @Override
-    public void dither(String imageName, String destinationImageName) throws IllegalArgumentException {
+    public void dither(String imageName,
+                       String destinationImageName) throws IllegalArgumentException {
       log.append("Received inputs ").append(imageName).append(" and ").append(destinationImageName);
     }
 
@@ -160,16 +166,22 @@ public class ExtendedImageManipulationsControllerImplTest extends ImageManipulat
     }
 
     @Override
-    public void blur(String imageName, String destinationImageName) throws IllegalArgumentException {
+    public void blur(String imageName,
+                     String destinationImageName) throws IllegalArgumentException {
       log.append("Received inputs ").append(imageName).append(" and ").append(destinationImageName);
     }
 
     @Override
-    public void sharpen(String imageName, String destinationImageName) throws IllegalArgumentException {
+    public void sharpen(String imageName,
+                        String destinationImageName) throws IllegalArgumentException {
       log.append("Received inputs ").append(imageName).append(" and ").append(destinationImageName);
     }
   }
 
+  /**
+   * A mock class created to implement the IImageManipulationsModelFactory
+   * interface.
+   */
   public class MockFactory implements IImageManipulationsModelFactory {
 
     @Override

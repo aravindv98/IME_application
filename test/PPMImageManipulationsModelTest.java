@@ -86,7 +86,8 @@ public class PPMImageManipulationsModelTest {
     ImageUtil.readFile(out, getImagePath("/test/testData/Test_Erro_Image.ppm"),
             "ppm");
     obj.loadImage(getImagePath("/test/testData/Test_Erro_Image.ppm"), "Test_Image", out);
-    assertEquals("File " + getImagePath("/test/testData/Test_Erro_Image.ppm") + " not found!", out.toString());
+    assertEquals("File " +
+            getImagePath("/test/testData/Test_Erro_Image.ppm") + " not found!", out.toString());
   }
 
   /**

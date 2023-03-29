@@ -13,5 +13,5 @@ public interface ImageManipulationsCmd {
    * @param m object of ImageManipulationsModel interface.
    * @return if the operation is successful or not.
    */
-  boolean go(ImageManipulationsModel m);
+  boolean execute(ImageManipulationsModel m);
 }

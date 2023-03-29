@@ -32,7 +32,7 @@ public class LoadImage implements ImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(ImageManipulationsModel m) throws IllegalArgumentException {
     return m.loadImage(imagePath, imageName, out);
   }
 }

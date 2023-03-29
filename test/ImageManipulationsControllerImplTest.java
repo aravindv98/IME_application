@@ -98,10 +98,9 @@ public class ImageManipulationsControllerImplTest {
     assertEquals(expected, out.toString());
   }
 
-  /**
-   * Test case to check if image brightening before loading is
-   * throwing an exception.
-   */
+  // Test case to check if image brightening before loading is
+  //throwing an exception.
+
   /*@Test(expected = IllegalArgumentException.class)
   public void brightenedBeforeLoading() {
     String input = "brighten 10 Test_Image Test_Image-brighten";

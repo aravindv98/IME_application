@@ -9,7 +9,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import model.ConventionalImageManipulationsModel;
-import model.IImageManipulationsModelFactory;
 import model.ImageManipulationsModelFactory;
 import model.NewImageManipulationsModel;
 import utility.ImageUtil;

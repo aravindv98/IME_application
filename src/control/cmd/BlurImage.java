@@ -28,7 +28,7 @@ public class BlurImage implements NewImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(NewImageManipulationsModel m) throws IllegalArgumentException {
     m.blur(sourceImageName, destImageName);
     return true;
   }

@@ -36,7 +36,7 @@ public class RGBSplit implements ImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(ImageManipulationsModel m) throws IllegalArgumentException {
     m.rgbSplit(imageName, redDestinationImageName, greenDestinationImageName,
             blueDestinationImageName);
     return true;

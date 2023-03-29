@@ -1,15 +1,12 @@
 package model;
 
-import java.awt.*;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -27,6 +24,11 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
     super();
   }
 
+  /**
+   * Single-ton design pattern.
+   *
+   * @return the class object.
+   */
   public static ConventionalImageManipulationsModel getInstance() {
     if (instance == null) {
       instance = new ConventionalImageManipulationsModel();

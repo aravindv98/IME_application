@@ -12,5 +12,5 @@ public interface NewImageManipulationsCmd {
    *
    * @param m model object supporting functionalities of new Image Manipulation operations.
    */
-  boolean go(NewImageManipulationsModel m);
+  boolean execute(NewImageManipulationsModel m);
 }

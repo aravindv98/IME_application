@@ -1,10 +1,7 @@
 package model;
 
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.io.OutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 
 /**
@@ -324,7 +321,7 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
           double sum = 0.0;
           for (int u = -1; u <= 1; u++) {
             for (int v = -1; v <= 1; v++) {
-              String arr[] = obj.listOfPixels[i + u][j + v].split(" ");
+              String[] arr = obj.listOfPixels[i + u][j + v].split(" ");
               sum += kernel[u + 1][v + 1] * Integer.parseInt(arr[k]);
             }
           }
@@ -351,9 +348,7 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   @Override
   public void blur(String imageName, String destinationImageName) throws IllegalArgumentException {
     // Define the blur filter kernel
-    double[][] kernel = {{0.0625, 0.125, 0.0625},
-            {0.125, 0.25, 0.125},
-            {0.0625, 0.125, 0.0625}};
+    double[][] kernel = {{0.0625, 0.125, 0.0625}, {0.125, 0.25, 0.125}, {0.0625, 0.125, 0.0625}};
     applyFilter(kernel, imageName, destinationImageName);
   }
 
@@ -447,9 +442,7 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   @Override
   public void sharpen(String imageName, String destinationImageName)
           throws IllegalArgumentException {
-    double[][] kernel = {{-0.125, -0.125, -0.125},
-            {-0.125, 2.0, -0.125},
-            {-0.125, -0.125, -0.125}};
+    double[][] kernel = {{-0.125, -0.125, -0.125}, {-0.125, 2.0, -0.125}, {-0.125, -0.125, -0.125}};
 
     applyFilter(kernel, imageName, destinationImageName);
   }

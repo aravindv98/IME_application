@@ -27,7 +27,7 @@ public class VerticalFlip implements ImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(ImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(ImageManipulationsModel m) throws IllegalArgumentException {
     m.verticalFlip(sourceImageName, destinationImageName);
     return true;
   }

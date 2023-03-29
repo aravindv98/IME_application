@@ -28,7 +28,7 @@ public class DitherImage implements NewImageManipulationsCmd {
   }
 
   @Override
-  public boolean go(NewImageManipulationsModel m) throws IllegalArgumentException {
+  public boolean execute(NewImageManipulationsModel m) throws IllegalArgumentException {
     m.dither(sourceImageName, destImageName);
     return true;
   }
