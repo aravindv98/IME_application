@@ -46,8 +46,8 @@ public class ImageUtil {
 
   public static boolean readFile(OutputStream out, String imagePath, String fileExtension) {
     InputStream inputStream = null;
+    String path = "";
     if (fileExtension.equals("ppm")) {
-      String path = "";
       Scanner sc = null;
       try {
         path = getFullImagePath(imagePath);
@@ -70,7 +70,7 @@ public class ImageUtil {
     }
     else {
       try {
-        String path = getFullImagePath(imagePath);
+        path = getFullImagePath(imagePath);
         File file = new File(path);
         BufferedImage image = ImageIO.read(file);
         byte[] bytes = toByteArray(image, fileExtension);
@@ -80,7 +80,7 @@ public class ImageUtil {
       }
       catch (IOException e) {
         PrintStream outStream = new PrintStream(out);
-        outStream.print("Error loading image: " + e.getMessage());
+        outStream.print("File " + path + " not found!");
         return false;
       }
     }
@@ -90,8 +90,10 @@ public class ImageUtil {
   }
 
   public static boolean writeFile(String fileExtension, String imagePath, OutputStream out) {
+    String path = "";
     if (fileExtension.equals("ppm")) {
-      File file = new File(getFullImagePath(imagePath));
+      path = getFullImagePath(imagePath);
+      File file = new File(path);
       FileWriter writer;
       try {
         writer = new FileWriter(file);
@@ -109,7 +111,7 @@ public class ImageUtil {
         writer.close();
       } catch (IOException e) {
         PrintStream outStream = new PrintStream(out);
-        outStream.print("Error loading image: " + e.getMessage());
+        outStream.print("File " + path + " not found!");
         return false;
       }
     }
@@ -125,7 +127,7 @@ public class ImageUtil {
         ImageIO.write(image, fileExtension, output);
       } catch (Exception e) {
         PrintStream outStream = new PrintStream(out);
-        outStream.print("Error loading image: " + e.getMessage());
+        outStream.print("File " + path + " not found!");
         return false;
       }
     }

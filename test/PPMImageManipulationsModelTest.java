@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 
 import model.ImageManipulationsModel;
 import model.PPMImageManipulationsModel;
+import utility.ImageUtil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -26,7 +27,9 @@ public class PPMImageManipulationsModelTest {
   public void setup() {
     out = new ByteArrayOutputStream();
     obj = PPMImageManipulationsModel.getInstance();
-    obj.loadImage(getImagePath(), "Test_Image", out);
+    ImageUtil.readFile(out, getImagePath("/test/testData/Test_Image.ppm"),
+            "ppm");
+    obj.loadImage(getImagePath("/test/testData/Test_Image.ppm"), "Test_Image", out);
   }
 
   @After
@@ -38,9 +41,9 @@ public class PPMImageManipulationsModelTest {
     f.delete();
   }
 
-  private String getImagePath() {
+  private String getImagePath(String relPath) {
     Path currentRelativePath = Paths.get("");
-    return currentRelativePath.toAbsolutePath() + "/test/testData/Test_Image.ppm";
+    return currentRelativePath.toAbsolutePath() + relPath;
   }
 
   /**
@@ -70,6 +73,7 @@ public class PPMImageManipulationsModelTest {
     obj.brighten(10, "Test_Image", "Test_Image-brighten");
     String str = s.append("/test/testData/Test_Image-brighten.ppm").toString();
     obj.saveImage(str, "Test_Image-brighten", out);
+    ImageUtil.writeFile("ppm", str, out);
     File f = new File(str);
     assertTrue(f.exists() && !f.isDirectory());
   }
@@ -77,13 +81,12 @@ public class PPMImageManipulationsModelTest {
   /**
    * Test case to check if a file is being loaded from an invalid path or not.
    */
-  @Test
+  @Test (expected = IllegalArgumentException.class)
   public void InvalidFilePathLoad() {
-    Path currentRelativePath = Paths.get("");
-    String filePath = currentRelativePath.toAbsolutePath()
-            + "/test/testData/Test_Erro_Image.ppm";
-    obj.loadImage(filePath, "Test_Image", out);
-    assertEquals("File " + filePath + " not found!", out.toString());
+    ImageUtil.readFile(out, getImagePath("/test/testData/Test_Erro_Image.ppm"),
+            "ppm");
+    obj.loadImage(getImagePath("/test/testData/Test_Erro_Image.ppm"), "Test_Image", out);
+    assertEquals("File " + getImagePath("/test/testData/Test_Erro_Image.ppm") + " not found!", out.toString());
   }
 
   /**
@@ -96,6 +99,7 @@ public class PPMImageManipulationsModelTest {
     obj.brighten(10, "Test_Image", "Test_Image-brighten");
     String str = s.append("/test/image/Test_Image-brighten.ppm").toString();
     obj.saveImage(str, "Test_Image-brighten", out);
+    ImageUtil.writeFile("ppm", str, out);
     assertEquals("File " + str + " not found!", out.toString());
   }
 

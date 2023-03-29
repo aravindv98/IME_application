@@ -12,6 +12,7 @@ import model.ConventionalImageManipulationsModel;
 import model.IImageManipulationsModelFactory;
 import model.ImageManipulationsModelFactory;
 import model.NewImageManipulationsModel;
+import utility.ImageUtil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -31,6 +32,8 @@ public class ConventionalImageManipulationsModelTest {
   public void setup() {
     out = new ByteArrayOutputStream();
     obj = ConventionalImageManipulationsModel.getInstance();
+    ImageUtil.readFile(out, getImagePath("/test/testData/manhattan-small.png"),
+            "png");
     obj.loadImage(getImagePath("/test/testData/manhattan-small.png"),
             "manhattan-small", out);
     factory = new ImageManipulationsModelFactory();
@@ -62,12 +65,15 @@ public class ConventionalImageManipulationsModelTest {
     obj.blur("manhattan-small", "manhattan-blur");
     String str = s.append("/test/testData/manhattan-blur.png").toString();
     obj.saveImage(str, "manhattan-blur", out);
+    ImageUtil.writeFile("png", str, out);
     File f = new File(str);
     assertTrue(f.exists() && !f.isDirectory());
   }
 
   @Test
   public void sepia() {
+    ImageUtil.readFile(out, getImagePath("/test/testData/manhattan-small-sepia-expected.png"),
+            "png");
     obj.loadImage(getImagePath("/test/testData/manhattan-small-sepia-expected.png"),
             "manhattan-small-sepia-expected", out);
     String expected = obj.getImageProperties("manhattan-small-sepia-expected");
@@ -78,6 +84,8 @@ public class ConventionalImageManipulationsModelTest {
 
   @Test
   public void dither() {
+    ImageUtil.readFile(out, getImagePath("/test/testData/manhattan-small-dither-expected.png"),
+            "png");
     obj.loadImage(getImagePath("/test/testData/manhattan-small-dither-expected.png"),
             "manhattan-small-dither-expected", out);
     String expected = obj.getImageProperties("manhattan-small-dither-expected");
@@ -88,6 +96,8 @@ public class ConventionalImageManipulationsModelTest {
 
   @Test
   public void blur() {
+    ImageUtil.readFile(out, getImagePath("/test/testData/manhattan-small-blur-expected.png"),
+            "png");
     obj.loadImage(getImagePath("/test/testData/manhattan-small-blur-expected.png"),
             "manhattan-small-blur-expected", out);
     String expected = obj.getImageProperties("manhattan-small-blur-expected");
@@ -98,6 +108,8 @@ public class ConventionalImageManipulationsModelTest {
 
   @Test
   public void sharpen() {
+    ImageUtil.readFile(out, getImagePath("/test/testData/manhattan-small-sharpen-expected.png"),
+            "png");
     obj.loadImage(getImagePath("/test/testData/manhattan-small-sharpen-expected.png"),
             "manhattan-small-sharpen-expected", out);
     String expected = obj.getImageProperties("manhattan-small-sharpen-expected");
@@ -108,6 +120,9 @@ public class ConventionalImageManipulationsModelTest {
 
   @Test
   public void greyscale() {
+    ImageUtil.readFile(out,
+            getImagePath("/test/testData/manhattan-small-greyscale-expected.png"),
+            "png");
     obj.loadImage(getImagePath("/test/testData/manhattan-small-greyscale-expected.png"),
             "manhattan-small-greyscale-expected", out);
     String expected = obj.getImageProperties("manhattan-small-greyscale-expected");
@@ -119,6 +134,9 @@ public class ConventionalImageManipulationsModelTest {
 
   @Test
   public void pngToBmp() {
+    ImageUtil.readFile(out,
+            getImagePath("/res/png_to_bmp.bmp"),
+            "bmp");
     obj.loadImage(getImagePath("/res/png_to_bmp.bmp"),
             "png_to_bmp_expected", out);
     String expected = obj.getImageProperties("png_to_bmp_expected");
@@ -134,6 +152,9 @@ public class ConventionalImageManipulationsModelTest {
   }
   @Test
   public void pngToJpg() {
+    ImageUtil.readFile(out,
+            getImagePath("/res/png_to_jpg.jpg"),
+            "jpg");
     obj.loadImage(getImagePath("/res/png_to_jpg.jpg"),
             "png_to_jpg_expected", out);
     String expected = obj.getImageProperties("png_to_jpg_expected");
@@ -149,6 +170,9 @@ public class ConventionalImageManipulationsModelTest {
   }
   @Test
   public void pngToPpm() {
+    ImageUtil.readFile(out,
+            getImagePath("/res/png_to_ppm.ppm"),
+            "ppm");
     obj = factory.getModel("png_to_ppm.ppm");
     obj.loadImage(getImagePath("/res/png_to_ppm.ppm"),
             "png_to_ppm_expected", out);
@@ -167,6 +191,9 @@ public class ConventionalImageManipulationsModelTest {
   }
   @Test
   public void ppmToJpg(){
+    ImageUtil.readFile(out,
+            getImagePath("/res/ppm_to_jpg.jpg"),
+            "jpg");
     obj = factory.getModel("ppm_to_jpg.jpg");
     obj.loadImage(getImagePath("/res/ppm_to_jpg.jpg"),
             "ppm_to_jpg_expected", out);
@@ -185,24 +212,39 @@ public class ConventionalImageManipulationsModelTest {
   }
   @Test
   public void jpgToBmp(){
+    ImageUtil.readFile(out,
+            getImagePath("/res/jpg_to_bmp.bmp"),
+            "bmp");
     obj.loadImage(getImagePath("/res/jpg_to_bmp.bmp"),
             "jpg_to_bmp_expected", out);
     String expected = obj.getImageProperties("jpg_to_bmp_expected");
+    ImageUtil.readFile(out,
+            getImagePath("/src/images/sample_jpg.jpeg"),
+            "jpeg");
     obj.loadImage(getImagePath("/src/images/sample_jpg.jpeg"),
             "sample-jpeg", out);
     Path currentRelativePath = Paths.get("");
     StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
     String str = s.append("/res/jpg_to_bmp_testcase.bmp").toString();
     obj.saveImage(str,"sample-jpeg",out);
+    ImageUtil.readFile(out,
+            getImagePath("/res/jpg_to_bmp_testcase.bmp"),
+            "bmp");
     obj.loadImage(getImagePath("/res/jpg_to_bmp_testcase.bmp"),"result",out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
   }
   @Test
   public void bmpTojpg(){
+    ImageUtil.readFile(out,
+            getImagePath("/res/bmp_to_jpg.jpg"),
+            "jpg");
     obj.loadImage(getImagePath("/res/bmp_to_jpg.jpg"),
             "bmp_to_jpg_expected", out);
     String expected = obj.getImageProperties("bmp_to_jpg_expected");
+    ImageUtil.readFile(out,
+            getImagePath("/src/images/blackbuck.bmp"),
+            "bmp");
     obj.loadImage(getImagePath("/src/images/blackbuck.bmp"),
             "sample-bmp", out);
     Path currentRelativePath = Paths.get("");
