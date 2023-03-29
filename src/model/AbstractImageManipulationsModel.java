@@ -1,5 +1,7 @@
 package model;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -60,18 +62,9 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
     }
   }
 
-  // Gets the full image path from the relative path.
-  protected String getFullImagePath(String path) {
-    Path currentPath = Paths.get(path);
-    if (!currentPath.isAbsolute()) {
-      return currentPath.toAbsolutePath().toString();
-    }
-
-    return path;
-  }
-
   @Override
-  abstract public boolean loadImage(String imagePath, String imageName, OutputStream out);
+  abstract public boolean loadImage(String imagePath, String imageName, OutputStream out)
+          throws IllegalArgumentException;
 
   @Override
   abstract public boolean saveImage(String imagePath, String imageName, OutputStream out);

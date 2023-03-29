@@ -22,6 +22,7 @@ import control.cmd.SaveImage;
 import control.cmd.VerticalFlip;
 import model.IImageManipulationsModelFactory;
 import model.ImageManipulationsModel;
+import utility.ImageUtil;
 
 /**
  * This class implements the ImageManipulationsController interface.
@@ -119,13 +120,17 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     });
 
     knownCommands.put("load", (a, o) -> {
-      fileExtension = a[1];
-      return new LoadImage(a[1], a[2], o);
+      fileExtension = ImageUtil.getFileExtension(a[1]);
+      if (ImageUtil.readFile(o, a[1], fileExtension))
+        return new LoadImage(a[1], a[2], o);
+
+      return null;
     });
 
     knownCommands.put("save", (a, o) -> {
-      fileExtension = a[1];
-      return new SaveImage(a[1], a[2], o);
+      fileExtension = ImageUtil.getFileExtension(a[1]);
+      SaveImage obj = new SaveImage(a[1], a[2], o);
+      return obj;
     });
 
     ImageManipulationsCmd c;
@@ -148,8 +153,16 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       if (factory != null)
         model = factory.getModel(fileExtension);
       boolean success = c.go(model);
-      if (success)
-        outputStream.print(str + " successful!\n");
+      if (success) {
+        if (str.equals("SaveImage")) {
+          if (ImageUtil.writeFile(fileExtension, arr[1], outputStream)) {
+            outputStream.print(str + " successful!\n");
+          }
+        }
+        else {
+          outputStream.print(str + " successful!\n");
+        }
+      }
 
       return true;
     }
@@ -181,7 +194,7 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
     Scanner sc = new Scanner(in);
     String line = sc.nextLine();
 
-    while (!line.toLowerCase().equals("q")) {
+    while (!line.equalsIgnoreCase("q")) {
       String[] arr = line.split(" ");
       this.executeModel(arr, outputStream);
 

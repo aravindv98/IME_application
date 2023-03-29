@@ -1,16 +1,20 @@
 package model;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
+
+import utility.ImageUtil;
 
 /**
  * This class extends the AbstractImageManipulationsModel class.
@@ -46,31 +50,13 @@ public class PPMImageManipulationsModel extends AbstractImageManipulationsModel 
       imageNamePropertiesMap.remove(imageName);
     }
 
-    Scanner sc;
-    String path = "";
-    try {
-      path = getFullImagePath(imagePath);
-      sc = new Scanner(new FileInputStream(path));
-    } catch (FileNotFoundException e) {
-      PrintStream outStream = new PrintStream(out);
-      outStream.print("File " + path + " not found!");
-      return false;
-    }
-    StringBuilder builder = new StringBuilder();
-    //read the file line by line, and populate a string. This will throw away any comment lines
-    while (sc.hasNextLine()) {
-      String s = sc.nextLine();
-      if (s.charAt(0) != '#') {
-        builder.append(s).append(System.lineSeparator());
-      }
+    InputStream in = ImageUtil.getInputData(imagePath);
+    if (in == null) {
+      throw new IllegalArgumentException("Invalid Input Stream!");
     }
 
-    //now set up the scanner to read from the string we just built
-    sc = new Scanner(builder.toString());
-
-    String token;
-
-    token = sc.next();
+    Scanner sc = new Scanner(in);
+    String token = sc.next();
     if (!token.equals("P3")) {
       throw new IllegalArgumentException("Invalid PPM file: plain RAW file should begin with P3");
     }
@@ -98,36 +84,24 @@ public class PPMImageManipulationsModel extends AbstractImageManipulationsModel 
 
     checkIfImagePresentInMap(imageName);
 
-    // Create a new file at the specified path with the given file name
-    File file = new File(getFullImagePath(imagePath));
-    FileWriter writer;
-    try {
-      writer = new FileWriter(file);
+    Pixels obj = imageNamePropertiesMap.get(imageName);
+    StringBuilder builder = new StringBuilder();
+    builder.append("P3\n");
+    builder.append(obj.width).append(" ").append(obj.height).append("\n");
+    builder.append(255 + "\n");
 
-      // Write the PPM header information to the file
-      Pixels obj = imageNamePropertiesMap.get(imageName);
-      writer.write("P3\n");
-      writer.write(obj.width + " " + obj.height + "\n");
-      writer.write(255 + "\n");
-
-      // Write the color information for each pixel to the file
-      for (int y = 0; y < obj.height; y++) {
-        for (int x = 0; x < obj.width; x++) {
-          String[] arr = obj.listOfPixels[x][y].split(" ");
-          writer.write(arr[0] + " ");
-          writer.write(arr[1] + " ");
-          writer.write(arr[2] + " ");
-        }
-        writer.write("\n");
+    for (int y = 0; y < obj.height; y++) {
+      for (int x = 0; x < obj.width; x++) {
+        String[] arr = obj.listOfPixels[x][y].split(" ");
+        builder.append(arr[0]).append(" ");
+        builder.append(arr[1]).append(" ");
+        builder.append(arr[2]).append(" ");
       }
-
-      // Close the file writer
-      writer.close();
-    } catch (IOException e) {
-      PrintStream outStream = new PrintStream(out);
-      outStream.print("File " + imagePath + " not found!");
-      return false;
+      builder.append("\n");
     }
+
+    InputStream inputStream = new ByteArrayInputStream(builder.toString().getBytes());
+    ImageUtil.setInputData(imagePath, inputStream);
 
     return true;
   }

@@ -2,11 +2,18 @@ package model;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
+
+import utility.ImageUtil;
 
 /**
  * This class extends the AbstractImageManipulationsModel class.
@@ -31,31 +38,34 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
   @Override
   public boolean loadImage(String imagePath, String imageName, OutputStream out)
           throws IllegalArgumentException {
-    Pixels properties;
-    try {
-      String path = getFullImagePath(imagePath);
-      File file = new File(path);
-      BufferedImage image = ImageIO.read(file);
 
-      int width = image.getWidth();
-      int height = image.getHeight();
-      properties = new Pixels(width, height);
-      // Get the pixel values
-      for (int x = 0; x < width; x++) {
-        for (int y = 0; y < height; y++) {
-          int rgb = image.getRGB(x, y);
-          Color color = new Color(rgb);
-          int r = color.getRed();
-          int g = color.getGreen();
-          int b = color.getBlue();
-          properties.listOfPixels[x][y] = r + " " + g + " " + b;
-        }
-      }
-    } catch (IOException e) {
-      System.out.println("Error loading image: " + e.getMessage());
-      return false;
+    InputStream in = ImageUtil.getInputData(imagePath);
+    if (in == null) {
+      throw new IllegalArgumentException("Invalid Input Stream!");
     }
 
+    BufferedImage image = null;
+    try {
+      image = ImageIO.read(in);
+    } catch (IOException e) {
+      PrintStream putStream = new PrintStream(out);
+      putStream.print("Error loading image: " + e.getMessage());
+    }
+
+    int width = image.getWidth();
+    int height = image.getHeight();
+    Pixels properties = new Pixels(width, height);
+    // Get the pixel values
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        int rgb = image.getRGB(x, y);
+        Color color = new Color(rgb);
+        int r = color.getRed();
+        int g = color.getGreen();
+        int b = color.getBlue();
+        properties.listOfPixels[x][y] = r + " " + g + " " + b;
+      }
+    }
     imageNamePropertiesMap.put(imageName, properties);
     return true;
   }
@@ -79,15 +89,18 @@ public class ConventionalImageManipulationsModel extends AbstractImageManipulati
       }
     }
 
-    File output = new File(getFullImagePath(imagePath));
     try {
-      String[] tokens = imagePath.split("\\.(?=[^\\.]+$)");
-      String extension = tokens[1];
-      ImageIO.write(image, extension, output);
-    } catch (Exception e) {
-      System.out.println("Error saving image: " + e.getMessage());
+      String fileExtension = ImageUtil.getFileExtension(imagePath);
+      byte[] bytes = ImageUtil.toByteArray(image, fileExtension);
+
+      // Convert byte array to InputStream
+      InputStream inputStream = new ByteArrayInputStream(bytes);
+      ImageUtil.setInputData(imagePath, inputStream);
+    } catch (IOException e) {
+      PrintStream outStream = new PrintStream(out);
+      outStream.print("Error saving image: " + e.getMessage());
       return false;
-     }
+    }
 
     return true;
   }
