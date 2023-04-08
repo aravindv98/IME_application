@@ -1,7 +1,12 @@
 package view;
 
+import java.io.File;
+
 public interface Features {
     void loadImage();
+
+    void load(File f);
+
     void saveImage(String[] sourceImages);
 
     void sepia(String[] sourceImages);

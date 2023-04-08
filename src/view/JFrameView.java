@@ -1,9 +1,7 @@
 package view;
 
-import utility.ImageUtil;
 import utility.Pixels;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
@@ -11,9 +9,10 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Objects;
 
@@ -25,11 +24,15 @@ public class JFrameView extends JFrame implements IView {
 
     private final JButton fileOpenButton;
 
+    private final JButton fileReloadButton;
+
     private final JPanel radioPanel;
 
     private final ButtonGroup buttonGroup;
 
     private String[] currentImages;
+
+    private File originalImage;
 
     private final JTextField textField;
 
@@ -83,6 +86,18 @@ public class JFrameView extends JFrame implements IView {
         textField.setText(String.valueOf(0));
         dropdown.setSelectedIndex(0);
     }
+
+    @Override
+    public void resetFocus() {
+        this.setFocusable(true);
+        this.requestFocus();
+    }
+
+    @Override
+    public void setOriginalImage(File image) {
+        this.originalImage = image;
+    }
+
     public JFrameView() {
         super();
         setTitle("ImageManipulationApplication");
@@ -113,6 +128,15 @@ public class JFrameView extends JFrame implements IView {
         fileSaveButton = new JButton("Save a file");
         fileSaveButton.setActionCommand("Save file");
         filesavePanel.add(fileSaveButton);
+
+        // Reload to original
+        JPanel fileReloadPanel = new JPanel();
+        fileReloadPanel.setLayout(new FlowLayout());
+        dialogBoxesPanel.add(fileReloadPanel);
+        fileReloadButton = new JButton("Reload to original image");
+        fileReloadButton.setActionCommand("Reload");
+        fileReloadPanel.add(fileReloadButton);
+
         mainPanel.add(dialogBoxesPanel);
 
         //Radio-button
@@ -181,6 +205,7 @@ public class JFrameView extends JFrame implements IView {
             imagePanel.add(imageScrollPane[i]);
         }
 
+        resetFocus();
         setVisible(true);
     }
 
@@ -193,11 +218,16 @@ public class JFrameView extends JFrame implements IView {
 
     @Override
     public void addFeatures(Features features) {
+
+        addKeyPressListeners(features);
+
         fileOpenButton.addActionListener(evt -> features.loadImage());
+        fileReloadButton.addActionListener(evt -> features.load(originalImage));
         fileSaveButton.addActionListener(evt -> features.saveImage(this.currentImages));
         brightnessButton.addActionListener(evt -> features.brightenImage(
                                                             Integer.parseInt(textField.getText()),
                                                             this.currentImages));
+
         greyscaleButton.addActionListener(evt -> features.greyscaleImage(
                 dropdown.getSelectedItem().toString(),
                 this.currentImages));
@@ -236,6 +266,67 @@ public class JFrameView extends JFrame implements IView {
             }
         }
 
+    }
+
+    private void addKeyPressListeners(Features features) {
+        fileOpenButton.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    features.loadImage();
+                }
+            }
+        });
+
+        fileReloadButton.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    features.load(originalImage);
+                }
+            }
+        });
+
+        fileSaveButton.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    features.saveImage(currentImages);
+                }
+            }
+        });
+
+        greyscaleButton.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    features.greyscaleImage(
+                            dropdown.getSelectedItem().toString(),
+                            currentImages);
+                }
+            }
+        });
+
+        dropdown.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    greyscaleButton.doClick(); // Simulate a click on the button
+                }
+            }
+        });
+
+        textField.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    brightnessButton.doClick(); // Simulate a click on the button
+                }
+            }
+        });
+        brightnessButton.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    features.brightenImage(
+                            Integer.parseInt(textField.getText()),
+                            currentImages);
+                }
+            }
+        });
     }
 
     @Override
@@ -329,6 +420,12 @@ public class JFrameView extends JFrame implements IView {
     @Override
     public void showLoadInfoMessage() {
         JOptionPane.showMessageDialog(null, "Please load an image using the 'Open a file' button!"
+                , "Message", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    @Override
+    public void showSaveSuccessMessage() {
+        JOptionPane.showMessageDialog(null, "Image saved successfully"
                 , "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 }

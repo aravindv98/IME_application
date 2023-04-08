@@ -1,4 +1,5 @@
 import control.ExtendedImageManipulationsControllerImpl;
+import control.GUICommandCallbackController;
 import control.ImageManipulationsController;
 import model.ImageManipulationsModelFactory;
 import view.IView;
@@ -56,7 +57,7 @@ public class SimpleImageManipulations {
     }*/
 
     IView view = new JFrameView();
-    new ExtendedImageManipulationsControllerImpl(
+    new GUICommandCallbackController(
             new ImageManipulationsModelFactory(),
             System.out,
             System.in,
