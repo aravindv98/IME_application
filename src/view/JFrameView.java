@@ -9,6 +9,8 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -39,8 +41,6 @@ public class JFrameView extends JFrame implements IView {
     private final JComboBox<String> dropdown;
 
     private final JButton brightnessButton;
-
-    private final JButton greyscaleButton;
 
     public class SignedNumberOnlyFilter extends DocumentFilter {
 
@@ -178,10 +178,8 @@ public class JFrameView extends JFrame implements IView {
         String[] options = {"none", "red-component", "green-component", "blue-component", "value-component",
                 "intensity-component", "luma-component"};
         dropdown = new JComboBox<>(options);
-        greyscaleButton = new JButton("Set greyscale");
         greyscalePanel.add(greyscaleText);
         greyscalePanel.add(dropdown);
-        greyscalePanel.add(greyscaleButton);
         customPanel.add(greyscalePanel);
         mainPanel.add(customPanel);
 
@@ -228,9 +226,13 @@ public class JFrameView extends JFrame implements IView {
                                                             Integer.parseInt(textField.getText()),
                                                             this.currentImages));
 
-        greyscaleButton.addActionListener(evt -> features.greyscaleImage(
-                dropdown.getSelectedItem().toString(),
-                this.currentImages));
+        dropdown.addActionListener (e -> {
+            if (dropdown.getSelectedIndex() != 0) {
+                features.greyscaleImage(
+                        dropdown.getSelectedItem().toString(),
+                        currentImages);
+            }
+        });
 
         Enumeration<AbstractButton> buttons = buttonGroup.getElements();
         while (buttons.hasMoreElements()) {
@@ -289,24 +291,6 @@ public class JFrameView extends JFrame implements IView {
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     features.saveImage(currentImages);
-                }
-            }
-        });
-
-        greyscaleButton.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    features.greyscaleImage(
-                            dropdown.getSelectedItem().toString(),
-                            currentImages);
-                }
-            }
-        });
-
-        dropdown.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    greyscaleButton.doClick(); // Simulate a click on the button
                 }
             }
         });
@@ -419,6 +403,7 @@ public class JFrameView extends JFrame implements IView {
 
     @Override
     public void showLoadInfoMessage() {
+        clearAllInputFields();
         JOptionPane.showMessageDialog(null, "Please load an image using the 'Open a file' button!"
                 , "Message", JOptionPane.INFORMATION_MESSAGE);
     }
