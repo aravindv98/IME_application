@@ -1,6 +1,8 @@
 package model;
 
 
+import utility.Pixels;
+
 import java.io.OutputStream;
 import java.util.HashMap;
 
@@ -14,26 +16,6 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
   // This helps in using the image name at any point later in our program
   // after loading it only once.
   protected static HashMap<String, Pixels> imageNamePropertiesMap = null;
-
-  /**
-   * Inner class used to store the properties of an image.
-   * This acts like a structure and object of this inner class is used in the Hash Map.
-   */
-  protected class Pixels {
-    public int width;
-    public int height;
-    public String[][] listOfPixels;
-
-    Pixels(int width, int height) {
-      this.width = width;
-      this.height = height;
-      this.listOfPixels = new String[width][height];
-    }
-
-    Pixels(Pixels another) {
-      this(another.width, another.height);
-    }
-  }
 
   protected AbstractImageManipulationsModel() {
     if (imageNamePropertiesMap == null) {
@@ -199,20 +181,8 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
       for (int x = 0; x < obj.width; x++) {
         String[] arr = obj.listOfPixels[x][y].split(" ");
 
-        // If the pixel value is at max, we should not increment it.
-        if (Integer.parseInt(arr[0]) > Integer.MAX_VALUE - increment) {
-          continue;
-        }
         int r = Math.min(Math.max(Integer.parseInt(arr[0]) + increment, 0), 255);
-
-        if (Integer.parseInt(arr[1]) > Integer.MAX_VALUE - increment) {
-          continue;
-        }
         int g = Math.min(Math.max(Integer.parseInt(arr[1]) + increment, 0), 255);
-
-        if (Integer.parseInt(arr[2]) > Integer.MAX_VALUE - increment) {
-          continue;
-        }
         int b = Math.min(Math.max(Integer.parseInt(arr[2]) + increment, 0), 255);
 
         newObj.listOfPixels[x][y] = r + " " + g + " " + b;
@@ -302,6 +272,12 @@ public abstract class AbstractImageManipulationsModel implements NewImageManipul
             + 255 + "\n"
             + pixels;
     return imageProperties;
+  }
+
+  @Override
+  public Pixels getImageNameProperties(String imageName) {
+    checkIfImagePresentInMap(imageName);
+    return imageNamePropertiesMap.get(imageName);
   }
 
   private void applyFilter(double[][] kernel, String imageName,

@@ -14,6 +14,7 @@ import control.ImageManipulationsController;
 import control.ImageManipulationsControllerImpl;
 import model.ImageManipulationsModel;
 import model.PPMImageManipulationsModel;
+import utility.Pixels;
 
 import static org.junit.Assert.assertEquals;
 
@@ -362,6 +363,11 @@ public class ImageManipulationsControllerImplTest {
 
     @Override
     public String getImageProperties(String imageName) {
+      return null;
+    }
+
+    @Override
+    public Pixels getImageNameProperties(String imageName) {
       return null;
     }
   }

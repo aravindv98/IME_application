@@ -28,8 +28,8 @@ import utility.ImageUtil;
  */
 public class ImageManipulationsControllerImpl implements ImageManipulationsController {
 
-  private final OutputStream out;
-  private final InputStream in;
+  protected final OutputStream out;
+  protected final InputStream in;
   ImageManipulationsModel model;
 
   IImageManipulationsModelFactory factory;

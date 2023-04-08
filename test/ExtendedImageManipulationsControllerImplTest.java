@@ -12,6 +12,7 @@ import control.ImageManipulationsController;
 import model.IImageManipulationsModelFactory;
 import model.ImageManipulationsModelFactory;
 import model.NewImageManipulationsModel;
+import utility.Pixels;
 
 import static org.junit.Assert.assertEquals;
 
@@ -175,6 +176,11 @@ public class ExtendedImageManipulationsControllerImplTest
     public void sharpen(String imageName,
                         String destinationImageName) throws IllegalArgumentException {
       log.append("Received inputs ").append(imageName).append(" and ").append(destinationImageName);
+    }
+
+    @Override
+    public Pixels getImageNameProperties(String imageName) {
+      return null;
     }
   }
 

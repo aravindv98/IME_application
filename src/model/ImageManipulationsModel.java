@@ -1,6 +1,8 @@
 package model;
 
 
+import utility.Pixels;
+
 import java.io.OutputStream;
 
 /**
@@ -114,4 +116,11 @@ public interface ImageManipulationsModel {
    * @param imageName the name of the image to obtain properties.
    */
   String getImageProperties(String imageName);
+
+  /**
+   * Gets the width, height, maximum Value, listOfPixels as a String for an Image.
+   *
+   * @param imageName the name of the image to obtain properties.
+   */
+  Pixels getImageNameProperties(String imageName);
 }

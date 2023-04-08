@@ -194,4 +194,6 @@ public class ImageUtil {
   public static InputStream getInputData(String imagePath) {
     return inputMap.get(imagePath);
   }
+
+  public static String getFileName(String name) { return name.replaceFirst("[.][^.]+$", "");}
 }

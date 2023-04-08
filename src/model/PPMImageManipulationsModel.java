@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.Scanner;
 
 import utility.ImageUtil;
+import utility.Pixels;
 
 /**
  * This class extends the AbstractImageManipulationsModel class.

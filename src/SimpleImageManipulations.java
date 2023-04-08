@@ -1,6 +1,8 @@
 import control.ExtendedImageManipulationsControllerImpl;
 import control.ImageManipulationsController;
 import model.ImageManipulationsModelFactory;
+import view.IView;
+import view.JFrameView;
 
 /**
  * Contains the main method which is the entry point of our program.
@@ -38,7 +40,7 @@ public class SimpleImageManipulations {
     }*/
 
     // New Caller code
-    ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(
+    /*ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(
             new ImageManipulationsModelFactory(),
             System.out,
             System.in);
@@ -51,6 +53,13 @@ public class SimpleImageManipulations {
         throw new IllegalArgumentException("Invalid argument entered for" +
                 "running a script!");
       }
-    }
+    }*/
+
+    IView view = new JFrameView();
+    new ExtendedImageManipulationsControllerImpl(
+            new ImageManipulationsModelFactory(),
+            System.out,
+            System.in,
+            view);
   }
 }

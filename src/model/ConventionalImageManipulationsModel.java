@@ -11,6 +11,7 @@ import java.io.PrintStream;
 import javax.imageio.ImageIO;
 
 import utility.ImageUtil;
+import utility.Pixels;
 
 /**
  * This class extends the AbstractImageManipulationsModel class.
