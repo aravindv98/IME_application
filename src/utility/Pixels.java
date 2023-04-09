@@ -1,8 +1,8 @@
 package utility;
 
 /**
- * Inner class used to store the properties of an image.
- * This acts like a structure and object of this inner class is used in the Hash Map.
+ * This class is used to store the properties of an image.
+ * This acts like a structure and object of this class is used in the Hash Map of the model.
  */
 public class Pixels {
     public int width;

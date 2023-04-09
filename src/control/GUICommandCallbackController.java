@@ -10,8 +10,19 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * GUI Controller that extends from the text based controller and performs the GUI operations
+ * making use of the model and view objects.
+ */
 public class GUICommandCallbackController extends ExtendedImageManipulationsControllerImpl implements Features {
 
+    /**
+     * Constructor.
+     * @param factory that decides the model object to return based on file extension.
+     * @param v view that has to contains the feature object.
+     * @param out Output stream object.
+     * @param in Input stream object.
+     */
     private final IView view;
     public GUICommandCallbackController(IImageManipulationsModelFactory factory,
                                                     OutputStream out, InputStream in, IView v) {
@@ -21,6 +32,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
         view.addFeatures(this);
     }
 
+    /**
+     * Checks if alteast an image is loaded in panel before performing any operations.
+     */
     private boolean isImageLoaded(String[] sourceImages) {
         if (sourceImages == null) {
             view.showLoadInfoMessage();
@@ -70,6 +84,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
             String path = f.getAbsolutePath();
             String fileName = ImageUtil.getFileName(sourceImage);
             String fileExtension = ImageUtil.getFileExtension(f.getName());
+
+            // Requires user to enter a file name for save along with extension,
+            // in case if he enters an invalid file extension name we display a message.
             if (view.showInvalidFileExtensionMessage(fileExtension)) {
                 return;
             }
@@ -85,6 +102,7 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
         view.showSaveSuccessMessage();
     }
 
+    // Gets the image properties and sets them on the view panels for display.
     private void setImageOnViewHelper(String[] destinationImages) {
         Pixels[] properties = new Pixels[destinationImages.length];
         for (int i=0; i<destinationImages.length; i++) {
@@ -101,6 +119,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
         String[] destinationImages = new String[sourceImages.length];
         for (int i=0; i<sourceImages.length; i++) {
+            // We do not want user to enter a destination image name,
+            // this is only for our reference and is required by the model.
+            // Hence, we create a destination image name ourselves and pass it to the model.
             destinationImages[i] = sourceImages[i] + "-sepia";
             model.sepia(sourceImages[i], destinationImages[i]);
         }
