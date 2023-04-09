@@ -66,7 +66,11 @@ public class ImageUtil {
    */
   public static String getFileExtension(String fileName) {
     String[] tokens = fileName.split("\\.(?=[^\\.]+$)");
-    return tokens[1];
+    if (tokens.length == 2) {
+      return tokens[1];
+    }
+
+    return "";
   }
 
   /**

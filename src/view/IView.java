@@ -31,4 +31,6 @@ public interface IView {
     void resetFocus();
 
     void setOriginalImage(File f);
+
+    void showExtensionMessage();
 }

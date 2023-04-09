@@ -88,6 +88,10 @@ public class JFrameView extends JFrame implements IView {
     public void clearAllInputFields() {
         buttonGroup.clearSelection();
         textField.setText(String.valueOf(0));
+        if (!Objects.equals(dropdown.getItemAt(0), "none")) {
+            dropdown.insertItemAt("none", 0);
+        }
+
         dropdown.setSelectedIndex(0);
     }
 
@@ -100,6 +104,13 @@ public class JFrameView extends JFrame implements IView {
     @Override
     public void setOriginalImage(File image) {
         this.originalImage = image;
+    }
+
+    @Override
+    public void showExtensionMessage() {
+        JOptionPane.showMessageDialog(null, "Please provide a valid file extension, " +
+                        "supported extensions are (.png), (.jpg), (.bmp), (.jpeg), (.ppm)"
+                , "Message", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public JFrameView() {
@@ -235,6 +246,7 @@ public class JFrameView extends JFrame implements IView {
                 features.greyscaleImage(
                         dropdown.getSelectedItem().toString(),
                         currentImages);
+                dropdown.removeItemAt(0);
             }
         });
 
@@ -373,10 +385,10 @@ public class JFrameView extends JFrame implements IView {
             imageScrollPane[i].setPreferredSize(new Dimension(100, 600));
             imagePanel.add(imageScrollPane[i]);
 
-            /// TODO for Histogram
-            this.histogram = new HistogramChart(properties[i]);
+            this.histogram = new HistogramChart();
             ChartPanel chart = this.histogram.createRGBChart(properties[i]);
             imagePanel.add(chart);
+
             // Tell the panel to redraw itself
             imagePanel.revalidate();
             imagePanel.repaint();

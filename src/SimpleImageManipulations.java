@@ -40,27 +40,30 @@ public class SimpleImageManipulations {
       }
     }*/
 
-    // New Caller code
-    /*ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(
-            new ImageManipulationsModelFactory(),
-            System.out,
-            System.in);
-    if (args.length == 0) {
-      controller.inputFromUserCommands(); // Calls the main controller.
-    } else {
-      if (args[0].equals("-file")) {
-        controller.inputFromScriptFile(args[1]); // Calls the main controller.
+    if (args.length >= 1) {
+      // New Caller code
+      ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(
+              new ImageManipulationsModelFactory(),
+              System.out,
+              System.in);
+      if (args[0].equals("-text")) {
+        controller.inputFromUserCommands(); // Calls the main controller.
       } else {
-        throw new IllegalArgumentException("Invalid argument entered for" +
-                "running a script!");
+        if (args[0].equals("-file")) {
+          controller.inputFromScriptFile(args[1]); // Calls the main controller.
+        } else {
+          throw new IllegalArgumentException("Invalid argument entered for" +
+                  "running a script!");
+        }
       }
-    }*/
-
-    IView view = new JFrameView();
-    new GUICommandCallbackController(
-            new ImageManipulationsModelFactory(),
-            System.out,
-            System.in,
-            view);
+    }
+    else {
+      IView view = new JFrameView();
+      new GUICommandCallbackController(
+              new ImageManipulationsModelFactory(),
+              System.out,
+              System.in,
+              view);
+    }
   }
 }

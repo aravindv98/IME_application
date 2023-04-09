@@ -3,16 +3,9 @@ package view;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.DefaultDrawingSupplier;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.StandardXYBarPainter;
-import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.SimpleHistogramBin;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -20,24 +13,19 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 import java.awt.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import utility.Pixels;
 
 public class HistogramChart implements IHistogram {
 
-  private Pixels properties;
+  private final Map<Integer, Integer> redFrequencyMap = new HashMap<>();
+  private final Map<Integer, Integer> greenFrequencyMap = new HashMap<>();
+  private final Map<Integer, Integer> blueFrequencyMap = new HashMap<>();
 
-  private Map<Integer, Integer> redFrequencyMap = new HashMap<>();
-  private Map<Integer, Integer> greenFrequencyMap = new HashMap<>();
-  private Map<Integer, Integer> blueFrequencyMap = new HashMap<>();
+  private final Map<Integer, Integer> intensityFrequencyMap = new HashMap<>();
 
-  private Map<Integer, Integer> intensityFrequencyMap = new HashMap<>();
-  private static final int BINS = 256;
-
-  protected HistogramChart(Pixels properties) {
-    this.properties = properties;
+  protected HistogramChart() {
 
     for (int i = 0; i <= 256; i++) {
       this.redFrequencyMap.put(i, 0);
@@ -49,8 +37,7 @@ public class HistogramChart implements IHistogram {
 
   @Override
   public ChartPanel createRGBChart(Pixels properties) {
-    int index = 0;
-      int width = properties.width;
+    int width = properties.width;
       int height = properties.height;
       for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
