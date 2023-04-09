@@ -107,10 +107,16 @@ public class JFrameView extends JFrame implements IView {
     }
 
     @Override
-    public void showExtensionMessage() {
+    public boolean showInvalidFileExtensionMessage(String fileExtension) {
+        if (!fileExtension.isEmpty() && (fileExtension.equals("jpg") || fileExtension.equals("jpeg")
+        || fileExtension.equals("ppm") || fileExtension.equals("bmp") || fileExtension.equals("png"))) {
+            return false;
+        }
+
         JOptionPane.showMessageDialog(null, "Please provide a valid file extension, " +
                         "supported extensions are (.png), (.jpg), (.bmp), (.jpeg), (.ppm)"
                 , "Message", JOptionPane.INFORMATION_MESSAGE);
+        return true;
     }
 
     public JFrameView() {

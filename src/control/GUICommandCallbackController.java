@@ -70,8 +70,7 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
             String path = f.getAbsolutePath();
             String fileName = ImageUtil.getFileName(sourceImage);
             String fileExtension = ImageUtil.getFileExtension(f.getName());
-            if (fileExtension.isEmpty()) {
-                view.showExtensionMessage();
+            if (view.showInvalidFileExtensionMessage(fileExtension)) {
                 return;
             }
 

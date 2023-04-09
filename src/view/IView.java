@@ -32,5 +32,5 @@ public interface IView {
 
     void setOriginalImage(File f);
 
-    void showExtensionMessage();
+    boolean showInvalidFileExtensionMessage(String extension);
 }
