@@ -1,5 +1,7 @@
 package view;
 
+import org.jfree.chart.ChartPanel;
+
 import utility.Pixels;
 
 import javax.swing.*;
@@ -41,6 +43,8 @@ public class JFrameView extends JFrame implements IView {
     private final JComboBox<String> dropdown;
 
     private final JButton brightnessButton;
+
+    private IHistogram histogram;
 
     public class SignedNumberOnlyFilter extends DocumentFilter {
 
@@ -202,7 +206,7 @@ public class JFrameView extends JFrame implements IView {
             imageScrollPane[i].setPreferredSize(new Dimension(100, 600));
             imagePanel.add(imageScrollPane[i]);
         }
-
+        this.histogram = null;
         resetFocus();
         setVisible(true);
     }
@@ -370,9 +374,9 @@ public class JFrameView extends JFrame implements IView {
             imagePanel.add(imageScrollPane[i]);
 
             /// TODO for Histogram
-
-
-
+            this.histogram = new HistogramChart(properties[i]);
+            ChartPanel chart = this.histogram.createRGBChart(properties[i]);
+            imagePanel.add(chart);
             // Tell the panel to redraw itself
             imagePanel.revalidate();
             imagePanel.repaint();
