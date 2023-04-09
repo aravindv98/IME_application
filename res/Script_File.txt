@@ -145,8 +145,8 @@ save ../res/pg_to_png.png sample_jpeg
 #save jpg to ppm
 save ../res/jpg_to_ppm.ppm sample_jpeg
 
-#load duck.ppm and call it 'duck'
-load ../src/images/duck.ppm duck
+#load Test_Image.ppm and call it 'Test_Image'
+load ../src/images/Test_Image.ppm duck
 
 #save ppm to jpg
 save ../res/ppm_to_jpg.jpg duck

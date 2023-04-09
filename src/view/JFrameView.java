@@ -11,8 +11,6 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -20,6 +18,9 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.Objects;
 
+/**
+ * Main view class used to implement the view functionalities.
+ */
 public class JFrameView extends JFrame implements IView {
 
     private final JPanel imagePanel;
@@ -46,6 +47,9 @@ public class JFrameView extends JFrame implements IView {
 
     private IHistogram histogram;
 
+    /**
+     * Applies filter on the text field for brightness so that it only allows entering signed numbers.
+     */
     public class SignedNumberOnlyFilter extends DocumentFilter {
 
         @Override
@@ -119,6 +123,9 @@ public class JFrameView extends JFrame implements IView {
         return true;
     }
 
+    /**
+     * Constructor.
+     */
     public JFrameView() {
         super();
         setTitle("ImageManipulationApplication");
@@ -177,6 +184,7 @@ public class JFrameView extends JFrame implements IView {
 
         mainPanel.add(radioPanel);
 
+        // Contains the text field for brightness and combobox for greyscale.
         JPanel customPanel = new JPanel();
         customPanel.setBorder(BorderFactory.createTitledBorder("Custom Image Operations"));
         customPanel.setLayout(new BoxLayout(customPanel, BoxLayout.Y_AXIS));
@@ -292,6 +300,10 @@ public class JFrameView extends JFrame implements IView {
 
     }
 
+    /**
+     * We are also supporting key events such as what happens if load button is on focus, and we press enter.
+     * Or if we press enter after entering values in text field.
+     */
     private void addKeyPressListeners(Features features) {
         fileOpenButton.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {

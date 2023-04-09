@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="Assignment5_MIME_Part2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Assignment5_MIME_Part2_jar</output-path>
+    <root id="archive" name="Assignment5_MIME_Part2.jar">
+      <element id="module-output" name="Assignment5_MIME_Part2" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/jcommon-1.0.23.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/jfreechart-1.0.19-experimental.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/jfreechart-1.0.19-swt.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/jfreechart-1.0.19.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/jfreesvg-2.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
