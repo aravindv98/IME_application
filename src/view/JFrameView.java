@@ -334,7 +334,7 @@ public class JFrameView extends JFrame implements IView {
         File f = null;
         final JFileChooser fchooser = new JFileChooser(".");
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
-                "JPG, PNG, PPM, BMP Images", "jpg", "png", "ppm", "bmp");
+                "JPG, JPEG, PNG, PPM, BMP Images", "jpg", "jpeg", "png", "ppm", "bmp");
         fchooser.setFileFilter(filter);
         int retvalue = fchooser.showOpenDialog(JFrameView.this);
         if (retvalue == JFileChooser.APPROVE_OPTION) {
