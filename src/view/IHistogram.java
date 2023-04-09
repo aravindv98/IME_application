@@ -3,7 +3,6 @@ package view;
 import org.jfree.chart.ChartPanel;
 
 
-import java.io.IOException;
 
 import utility.Pixels;
 
