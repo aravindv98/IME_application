@@ -131,7 +131,8 @@ public class ConventionalImageManipulationsModelTest {
     assertEquals(expected, result);
   }
 
-  // Commenting out these three tests as they require big datasets, and we had to remove the datasets as
+  // Commenting out these three tests as they require big datasets, and
+  // we had to remove the datasets as
   // this was causing an issue while submitting in handin coz we were exceeding the limit of 7MB.
   // Have tried thse test locally, they work fine as expected.
   /*@Test

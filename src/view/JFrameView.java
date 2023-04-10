@@ -2,14 +2,6 @@ package view;
 
 import org.jfree.chart.ChartPanel;
 
-import utility.Pixels;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -17,6 +9,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Objects;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+
+import utility.Pixels;
 
 /**
  * Main view class used to implement the view functionalities.
