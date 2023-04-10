@@ -215,22 +215,23 @@ public class JFrameView extends JFrame implements IView {
         //show an image with a scrollbar
         imagePanel = new JPanel();
         //a border around the panel with a caption
-        imagePanel.setBorder(BorderFactory.createTitledBorder("Showing an image"));
+        imagePanel.setBorder(BorderFactory.createTitledBorder("Showing images"));
         imagePanel.setLayout(new GridLayout(1, 0, 10, 10));
         mainPanel.add(imagePanel);
 
         // Create an initial blank panel
-        String[] images = {"", ""};
-        JLabel[] imageLabel = new JLabel[images.length];
-        JScrollPane[] imageScrollPane = new JScrollPane[images.length];
+        // Create an initial blank panel
+        JLabel[] imageLabel = new JLabel[1];
+        JScrollPane[] imageScrollPane = new JScrollPane[1];
 
-        for (int i = 0; i < imageLabel.length; i++) {
-            imageLabel[i] = new JLabel();
-            imageScrollPane[i] = new JScrollPane(imageLabel[i]);
-            imageLabel[i].setIcon(new ImageIcon(images[i]));
-            imageScrollPane[i].setPreferredSize(new Dimension(100, 600));
-            imagePanel.add(imageScrollPane[i]);
-        }
+        imageLabel[0] = new JLabel();
+        imageScrollPane[0] = new JScrollPane(imageLabel[0]);
+        imageLabel[0].setText("Please load an image using the 'Open a file' button!");
+        imageLabel[0].setHorizontalAlignment(SwingConstants.CENTER); // Center the text
+        imageLabel[0].setFont(new Font("Arial", Font.PLAIN, 24)); // Increase the font size
+        imageScrollPane[0].setPreferredSize(new Dimension(100, 450));
+        imagePanel.add(imageScrollPane[0]);
+
         this.histogram = null;
         resetFocus();
         setVisible(true);
