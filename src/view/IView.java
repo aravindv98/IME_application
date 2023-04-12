@@ -1,7 +1,6 @@
 package view;
 
 import java.io.File;
-
 import utility.Pixels;
 
 /**
@@ -14,7 +13,7 @@ public interface IView {
    *
    * @param features the features object.
    */
-  void addFeatures(Features features);
+  void addFeatures(Features features) throws IllegalArgumentException;
 
   /**
    * Choose file to load.
@@ -32,7 +31,7 @@ public interface IView {
    * @param images     to be set to the panel.
    * @param properties of images as input.
    */
-  void setImageInPanel(String images[], Pixels[] properties);
+  void setImageInPanel(String[] images, Pixels[] properties);
 
   /**
    * Disables RGB split operation after once, as we want to do it only once.

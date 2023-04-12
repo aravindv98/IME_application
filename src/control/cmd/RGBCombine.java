@@ -25,8 +25,8 @@ public class RGBCombine implements ImageManipulationsCmd {
                     String redSourceImageName,
                     String greenSourceImageName,
                     String blueSourceImageName) throws IllegalArgumentException {
-    if (destinationImage.isEmpty() || redSourceImageName.isEmpty() ||
-            greenSourceImageName.isEmpty() || blueSourceImageName.isEmpty()) {
+    if (destinationImage.isEmpty() || redSourceImageName.isEmpty()
+        || greenSourceImageName.isEmpty() || blueSourceImageName.isEmpty()) {
       throw new IllegalArgumentException("Invalid arguments passed!");
     }
 

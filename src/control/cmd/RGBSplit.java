@@ -24,8 +24,8 @@ public class RGBSplit implements ImageManipulationsCmd {
                   String redDestinationImageName,
                   String greenDestinationImageName,
                   String blueDestinationImageName) throws IllegalArgumentException {
-    if (redDestinationImageName.isEmpty() || greenDestinationImageName.isEmpty() ||
-            blueDestinationImageName.isEmpty() || imageName.isEmpty()) {
+    if (redDestinationImageName.isEmpty() || greenDestinationImageName.isEmpty()
+        || blueDestinationImageName.isEmpty() || imageName.isEmpty()) {
       throw new IllegalArgumentException("Invalid arguments passed!");
     }
 

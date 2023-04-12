@@ -15,20 +15,18 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Scanner;
-
 import javax.imageio.ImageIO;
 
 /**
- * A class created to handle I/O operations of read and write
- * of a file.
+ * A class created to handle I/O operations of read and write of a file.
  */
 public class ImageUtil {
 
   static HashMap<String, InputStream> inputMap = new HashMap<>();
 
   /**
-   * A method to convert the buffered image to byte array in order for it
-   * to be processed by load/save methods.
+   * A method to convert the buffered image to byte array in order for it to be processed by
+   * load/save methods.
    *
    * @param image  containing the image content.
    * @param format format of the image.
@@ -178,8 +176,7 @@ public class ImageUtil {
   }
 
   /**
-   * A method to store the file content in a map for it to be
-   * accessible by the load method.
+   * A method to store the file content in a map for it to be accessible by the load method.
    *
    * @param imagePath path of the image.
    * @param os        object of inputstream.
@@ -189,8 +186,7 @@ public class ImageUtil {
   }
 
   /**
-   * A method to get the file content by providing the path of the file
-   * as argument.
+   * A method to get the file content by providing the path of the file as argument.
    *
    * @param imagePath path of the image.
    * @return the inputstream object from the map.
@@ -199,5 +195,7 @@ public class ImageUtil {
     return inputMap.get(imagePath);
   }
 
-  public static String getFileName(String name) { return name.replaceFirst("[.][^.]+$", "");}
+  public static String getFileName(String name) {
+    return name.replaceFirst("[.][^.]+$", "");
+  }
 }

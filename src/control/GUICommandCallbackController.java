@@ -14,7 +14,8 @@ import view.IView;
  * GUI Controller that extends from the text based controller and performs the GUI operations
  * making use of the model and view objects.
  */
-public class GUICommandCallbackController extends ExtendedImageManipulationsControllerImpl implements Features {
+public class GUICommandCallbackController extends ExtendedImageManipulationsControllerImpl
+    implements Features {
 
   /**
    * Constructor.
@@ -26,6 +27,14 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
    */
   private final IView view;
 
+  /**
+   * Constructor.
+   *
+   * @param factory that decides the model object to return based on file extension.
+   * @param out Output stream object.
+   * @param in Input stream object.
+   * @param v view object.
+   */
   public GUICommandCallbackController(IImageManipulationsModelFactory factory,
                                       OutputStream out, InputStream in, IView v) {
     super(factory, out, in);
@@ -55,7 +64,8 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
       model = factory.getModel(fileExtension);
     }
     model.loadImage(f.getAbsolutePath(), fileName, out);
-    view.setImageInPanel(new String[]{fileName}, new Pixels[]{model.getImageNameProperties(fileName)});
+    view.setImageInPanel(new String[]{fileName},
+        new Pixels[]{model.getImageNameProperties(fileName)});
     view.clearAllInputFields();
     view.resetFocus();
     view.setOriginalImage(f);
@@ -74,8 +84,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void saveImage(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     for (String sourceImage : sourceImages) {
       File f = view.getFilesToSave();
@@ -116,8 +127,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void sepia(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -132,8 +144,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void dither(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -145,8 +158,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void blur(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -158,8 +172,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void sharpen(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -171,8 +186,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void horizontalFlip(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -184,8 +200,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void verticalFlip(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -197,8 +214,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void rgbSplit(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[3];
     destinationImages[0] = sourceImages[0] + "-red";
@@ -213,8 +231,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void rgbCombine(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String destinationImage = sourceImages[0] + "-rgbCombine";
 
@@ -225,8 +244,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void brightenImage(int brightnessFactor, String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -238,8 +258,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void greyscaleImage(String componentType, String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {
@@ -251,8 +272,9 @@ public class GUICommandCallbackController extends ExtendedImageManipulationsCont
 
   @Override
   public void createGreyscale(String[] sourceImages) {
-    if (!isImageLoaded(sourceImages))
+    if (!isImageLoaded(sourceImages)) {
       return;
+    }
 
     String[] destinationImages = new String[sourceImages.length];
     for (int i = 0; i < sourceImages.length; i++) {

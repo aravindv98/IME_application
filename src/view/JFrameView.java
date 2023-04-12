@@ -1,22 +1,38 @@
 package view;
 
-import org.jfree.chart.ChartPanel;
-
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Objects;
-
-import javax.swing.*;
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
-
+import org.jfree.chart.ChartPanel;
 import utility.Pixels;
 
 /**
@@ -35,94 +51,12 @@ public class JFrameView extends JFrame implements IView {
   private final JPanel radioPanel;
 
   private final ButtonGroup buttonGroup;
-
-  private String[] currentImages;
-
-  private File originalImage;
-
   private final JTextField textField;
-
   private final JComboBox<String> dropdown;
-
   private final JButton brightnessButton;
-
+  private String[] currentImages;
+  private File originalImage;
   private IHistogram histogram;
-
-  /**
-   * Applies filter on the text field for brightness so that it only allows entering signed numbers.
-   */
-  public class SignedNumberOnlyFilter extends DocumentFilter {
-
-    @Override
-    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
-            throws BadLocationException {
-      StringBuilder builder = new StringBuilder(string);
-      for (int i = builder.length() - 1; i >= 0; i--) {
-        int cp = builder.codePointAt(i);
-        if (!Character.isDigit(cp) && cp != '-' || i == 0 && cp == '-') {
-          builder.deleteCharAt(i);
-          if (cp == '-') {
-            builder.insert(0, '-');
-          }
-        }
-      }
-      super.insertString(fb, offset, builder.toString(), attr);
-    }
-
-    @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
-            throws BadLocationException {
-      if (text != null) {
-        StringBuilder builder = new StringBuilder(text);
-        for (int i = builder.length() - 1; i >= 0; i--) {
-          int cp = builder.codePointAt(i);
-          if (!Character.isDigit(cp) && cp != '-' || i == 0 && cp == '-') {
-            builder.deleteCharAt(i);
-            if (cp == '-') {
-              builder.insert(0, '-');
-            }
-          }
-        }
-        text = builder.toString();
-      }
-      super.replace(fb, offset, length, text, attrs);
-    }
-  }
-
-  @Override
-  public void clearAllInputFields() {
-    buttonGroup.clearSelection();
-    textField.setText(String.valueOf(0));
-    if (!Objects.equals(dropdown.getItemAt(0), "none")) {
-      dropdown.insertItemAt("none", 0);
-    }
-
-    dropdown.setSelectedIndex(0);
-  }
-
-  @Override
-  public void resetFocus() {
-    this.setFocusable(true);
-    this.requestFocus();
-  }
-
-  @Override
-  public void setOriginalImage(File image) {
-    this.originalImage = image;
-  }
-
-  @Override
-  public boolean showInvalidFileExtensionMessage(String fileExtension) {
-    if (!fileExtension.isEmpty() && (fileExtension.equals("jpg") || fileExtension.equals("jpeg")
-            || fileExtension.equals("ppm") || fileExtension.equals("bmp") || fileExtension.equals("png"))) {
-      return false;
-    }
-
-    JOptionPane.showMessageDialog(null, "Please provide a valid file extension, " +
-                    "supported extensions are (.png), (.jpg), (.bmp), (.jpeg), (.ppm)"
-            , "Message", JOptionPane.INFORMATION_MESSAGE);
-    return true;
-  }
 
   /**
    * Constructor.
@@ -131,7 +65,6 @@ public class JFrameView extends JFrame implements IView {
     super();
     setTitle("ImageManipulationApplication");
     setSize(400, 400);
-
 
     JPanel mainPanel = new JPanel();
     //for elements to be arranged vertically within this panel
@@ -205,8 +138,9 @@ public class JFrameView extends JFrame implements IView {
     JPanel greyscalePanel = new JPanel();
     greyscalePanel.setLayout(new FlowLayout());
     JLabel greyscaleText = new JLabel("Select the greyscale component type:");
-    String[] options = {"none", "red-component", "green-component", "blue-component", "value-component",
-            "intensity-component", "luma-component"};
+    String[] options = {"none", "red-component", "green-component", "blue-component",
+        "value-component",
+        "intensity-component", "luma-component"};
     dropdown = new JComboBox<>(options);
     greyscalePanel.add(greyscaleText);
     greyscalePanel.add(dropdown);
@@ -238,6 +172,42 @@ public class JFrameView extends JFrame implements IView {
     setVisible(true);
   }
 
+  @Override
+  public void clearAllInputFields() {
+    buttonGroup.clearSelection();
+    textField.setText(String.valueOf(0));
+    if (!Objects.equals(dropdown.getItemAt(0), "none")) {
+      dropdown.insertItemAt("none", 0);
+    }
+
+    dropdown.setSelectedIndex(0);
+  }
+
+  @Override
+  public void resetFocus() {
+    this.setFocusable(true);
+    this.requestFocus();
+  }
+
+  @Override
+  public void setOriginalImage(File image) {
+    this.originalImage = image;
+  }
+
+  @Override
+  public boolean showInvalidFileExtensionMessage(String fileExtension) {
+    if (!fileExtension.isEmpty() && (fileExtension.equals("jpg") || fileExtension.equals("jpeg")
+        || fileExtension.equals("ppm") || fileExtension.equals("bmp") || fileExtension.equals(
+        "png"))) {
+      return false;
+    }
+
+    JOptionPane.showMessageDialog(null, "Please provide a valid file extension, "
+            + "supported extensions are (.png), (.jpg), (.bmp), (.jpeg), (.ppm)",
+        "Message", JOptionPane.INFORMATION_MESSAGE);
+    return true;
+  }
+
   private void addRadioButton(String optionName) {
     JRadioButton radioButton = new JRadioButton(optionName);
     radioButton.setActionCommand(optionName);
@@ -246,7 +216,7 @@ public class JFrameView extends JFrame implements IView {
   }
 
   @Override
-  public void addFeatures(Features features) {
+  public void addFeatures(Features features) throws IllegalArgumentException {
 
     addKeyPressListeners(features);
 
@@ -254,14 +224,14 @@ public class JFrameView extends JFrame implements IView {
     fileReloadButton.addActionListener(evt -> features.load(originalImage));
     fileSaveButton.addActionListener(evt -> features.saveImage(this.currentImages));
     brightnessButton.addActionListener(evt -> features.brightenImage(
-            Integer.parseInt(textField.getText()),
-            this.currentImages));
+        Integer.parseInt(textField.getText()),
+        this.currentImages));
 
     dropdown.addActionListener(e -> {
       if (dropdown.getSelectedIndex() != 0) {
         features.greyscaleImage(
-                dropdown.getSelectedItem().toString(),
-                currentImages);
+            dropdown.getSelectedItem().toString(),
+            currentImages);
         if (Objects.equals(dropdown.getItemAt(0), "none")) {
           dropdown.removeItemAt(0);
         }
@@ -299,14 +269,15 @@ public class JFrameView extends JFrame implements IView {
         case "create-greyscale":
           radioButton.addActionListener(evt -> features.createGreyscale(this.currentImages));
           break;
+        default:
+          throw new IllegalArgumentException("Invalid feature added!");
       }
     }
-
   }
 
   /**
-   * We are also supporting key events such as what happens if load button is on focus, and we press enter.
-   * Or if we press enter after entering values in text field.
+   * We are also supporting key events such as what happens if load button is on focus, and we press
+   * enter. Or if we press enter after entering values in text field.
    */
   private void addKeyPressListeners(Features features) {
     fileOpenButton.addKeyListener(new KeyAdapter() {
@@ -344,8 +315,8 @@ public class JFrameView extends JFrame implements IView {
       public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
           features.brightenImage(
-                  Integer.parseInt(textField.getText()),
-                  currentImages);
+              Integer.parseInt(textField.getText()),
+              currentImages);
         }
       }
     });
@@ -356,7 +327,7 @@ public class JFrameView extends JFrame implements IView {
     File f = null;
     final JFileChooser fchooser = new JFileChooser(".");
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "JPG, JPEG, PNG, PPM, BMP Images", "jpg", "jpeg", "png", "ppm", "bmp");
+        "JPG, JPEG, PNG, PPM, BMP Images", "jpg", "jpeg", "png", "ppm", "bmp");
     fchooser.setFileFilter(filter);
     int retvalue = fchooser.showOpenDialog(JFrameView.this);
     if (retvalue == JFileChooser.APPROVE_OPTION) {
@@ -396,8 +367,8 @@ public class JFrameView extends JFrame implements IView {
         for (int x = 0; x < width; x++) {
           String[] arr = properties[i].listOfPixels[x][y].split(" ");
           Color temp = new Color(Integer.parseInt(arr[0]),
-                  Integer.parseInt(arr[1]),
-                  Integer.parseInt(arr[2]));
+              Integer.parseInt(arr[1]),
+              Integer.parseInt(arr[2]));
           image.setRGB(x, y, temp.getRGB());
         }
       }
@@ -442,13 +413,56 @@ public class JFrameView extends JFrame implements IView {
   @Override
   public void showLoadInfoMessage() {
     clearAllInputFields();
-    JOptionPane.showMessageDialog(null, "Please load an image using the 'Open a file' button!"
-            , "Message", JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(null,
+        "Please load an image using the 'Open a file' button!",
+        "Message", JOptionPane.INFORMATION_MESSAGE);
   }
 
   @Override
   public void showSaveSuccessMessage() {
-    JOptionPane.showMessageDialog(null, "Image saved successfully"
-            , "Message", JOptionPane.INFORMATION_MESSAGE);
+    JOptionPane.showMessageDialog(null, "Image saved successfully",
+        "Message", JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  /**
+   * Applies filter on the text field for brightness so that it only allows entering signed
+   * numbers.
+   */
+  public class SignedNumberOnlyFilter extends DocumentFilter {
+
+    @Override
+    public void insertString(FilterBypass fb, int offset, String string, AttributeSet attr)
+        throws BadLocationException {
+      StringBuilder builder = new StringBuilder(string);
+      for (int i = builder.length() - 1; i >= 0; i--) {
+        int cp = builder.codePointAt(i);
+        if (!Character.isDigit(cp) && cp != '-' || i == 0 && cp == '-') {
+          builder.deleteCharAt(i);
+          if (cp == '-') {
+            builder.insert(0, '-');
+          }
+        }
+      }
+      super.insertString(fb, offset, builder.toString(), attr);
+    }
+
+    @Override
+    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs)
+        throws BadLocationException {
+      if (text != null) {
+        StringBuilder builder = new StringBuilder(text);
+        for (int i = builder.length() - 1; i >= 0; i--) {
+          int cp = builder.codePointAt(i);
+          if (!Character.isDigit(cp) && cp != '-' || i == 0 && cp == '-') {
+            builder.deleteCharAt(i);
+            if (cp == '-') {
+              builder.insert(0, '-');
+            }
+          }
+        }
+        text = builder.toString();
+      }
+      super.replace(fb, offset, length, text, attrs);
+    }
   }
 }

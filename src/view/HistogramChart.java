@@ -1,25 +1,20 @@
 package view;
 
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-
-
-import java.awt.Color;
-import java.util.HashMap;
-import java.util.Map;
-
 import utility.Pixels;
 
 /**
- * A class that implements IHistogram interface to generate the line
- * chart for a any given image.
+ * A class that implements IHistogram interface to generate the line chart for a any given image.
  */
 public class HistogramChart implements IHistogram {
 
@@ -44,9 +39,9 @@ public class HistogramChart implements IHistogram {
     final XYSeriesCollection dataset = getXySeriesCollection(properties);
 
     JFreeChart chart = ChartFactory.createXYLineChart("Histogram",
-            "Pixel Value",
-            "Frequency", (XYDataset) dataset,
-            PlotOrientation.VERTICAL, true, true, false);
+        "Pixel Value",
+        "Frequency", dataset,
+        PlotOrientation.VERTICAL, true, true, false);
     XYPlot plot = (XYPlot) chart.getPlot();
     XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
     renderer.setSeriesPaint(0, Color.RED);
@@ -70,15 +65,15 @@ public class HistogramChart implements IHistogram {
 
         String[] arr = properties.listOfPixels[x][y].split(" ");
         int intensityValue = (Integer.parseInt(arr[0]) + Integer.parseInt(arr[1])
-                + Integer.parseInt(arr[2])) / 3;
+            + Integer.parseInt(arr[2])) / 3;
         this.redFrequencyMap.put(Integer.parseInt(arr[0]),
-                this.redFrequencyMap.get(Integer.parseInt(arr[0])) + 1);
+            this.redFrequencyMap.get(Integer.parseInt(arr[0])) + 1);
         this.greenFrequencyMap.put(Integer.parseInt(arr[1]),
-                this.greenFrequencyMap.get(Integer.parseInt(arr[1])) + 1);
+            this.greenFrequencyMap.get(Integer.parseInt(arr[1])) + 1);
         this.blueFrequencyMap.put(Integer.parseInt(arr[2]),
-                this.blueFrequencyMap.get(Integer.parseInt(arr[2])) + 1);
+            this.blueFrequencyMap.get(Integer.parseInt(arr[2])) + 1);
         this.intensityFrequencyMap.put(intensityValue,
-                this.intensityFrequencyMap.get(intensityValue) + 1);
+            this.intensityFrequencyMap.get(intensityValue) + 1);
       }
     }
     final XYSeriesCollection dataset = new XYSeriesCollection();
