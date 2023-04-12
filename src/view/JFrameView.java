@@ -262,7 +262,9 @@ public class JFrameView extends JFrame implements IView {
                 features.greyscaleImage(
                         dropdown.getSelectedItem().toString(),
                         currentImages);
-                dropdown.removeItemAt(0);
+                if (Objects.equals(dropdown.getItemAt(0), "none")) {
+                    dropdown.removeItemAt(0);
+                }
             }
         });
 
