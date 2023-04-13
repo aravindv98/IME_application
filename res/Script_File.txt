@@ -140,7 +140,7 @@ load ../src/images/sample_jpg.jpeg sample_jpeg
 save ../res/jpg_to_bmp.bmp sample_jpeg
 
 #save jpg to png
-save ../res/pg_to_png.png sample_jpeg
+save ../res/jpg_to_png.png sample_jpeg
 
 #save jpg to ppm
 save ../res/jpg_to_ppm.ppm sample_jpeg

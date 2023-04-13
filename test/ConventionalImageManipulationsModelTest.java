@@ -131,16 +131,12 @@ public class ConventionalImageManipulationsModelTest {
     assertEquals(expected, result);
   }
 
-  // Commenting out these three tests as they require big datasets, and
-  // we had to remove the datasets as
-  // this was causing an issue while submitting in handin coz we were exceeding the limit of 7MB.
-  // Have tried thse test locally, they work fine as expected.
-  /*@Test
+  @Test
   public void pngToBmp() {
     ImageUtil.readFile(out,
-            getImagePath("/res/png_to_bmp.bmp"),
+            getImagePath("/test/testData/png_to_bmp.bmp"),
             "bmp");
-    obj.loadImage(getImagePath("/res/png_to_bmp.bmp"),
+    obj.loadImage(getImagePath("/test/testData/png_to_bmp.bmp"),
             "png_to_bmp_expected", out);
     String expected = obj.getImageProperties("png_to_bmp_expected");
     ImageUtil.readFile(out,
@@ -150,12 +146,12 @@ public class ConventionalImageManipulationsModelTest {
             "manhattan-png", out);
     Path currentRelativePath = Paths.get("");
     StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
-    String str = s.append("/res/png_to_bmp_testcase.bmp").toString();
+    String str = s.append("/test/testData/png_to_bmp_testcase.bmp").toString();
     obj.saveImage(str, "manhattan-png", out);
     ImageUtil.readFile(out,
-            getImagePath("/res/png_to_bmp_testcase.bmp"),
+            getImagePath("/test/testData/png_to_bmp_testcase.bmp"),
             "bmp");
-    obj.loadImage(getImagePath("/res/png_to_bmp_testcase.bmp"), "result", out);
+    obj.loadImage(getImagePath("/test/testData/png_to_bmp_testcase.bmp"), "result", out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
   }
@@ -163,10 +159,10 @@ public class ConventionalImageManipulationsModelTest {
   @Test
   public void pngToPpm() {
     ImageUtil.readFile(out,
-            getImagePath("/res/png_to_ppm.ppm"),
+            getImagePath("/test/testData/png_to_ppm.ppm"),
             "ppm");
     obj = factory.getModel("ppm");
-    obj.loadImage(getImagePath("/res/png_to_ppm.ppm"),
+    obj.loadImage(getImagePath("/test/testData/png_to_ppm.ppm"),
             "png_to_ppm_expected", out);
     String expected = obj.getImageProperties("png_to_ppm_expected");
     ImageUtil.readFile(out,
@@ -177,13 +173,13 @@ public class ConventionalImageManipulationsModelTest {
             "manhattan-png", out);
     Path currentRelativePath = Paths.get("");
     StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
-    String str = s.append("/res/png_to_ppm_testcase.ppm").toString();
+    String str = s.append("/test/testData/png_to_ppm_testcase.ppm").toString();
     obj = factory.getModel("ppm");
     obj.saveImage(str, "manhattan-png", out);
     ImageUtil.readFile(out,
-            getImagePath("/res/png_to_ppm_testcase.ppm"),
+            getImagePath("/test/testData/png_to_ppm_testcase.ppm"),
             "ppm");
-    obj.loadImage(getImagePath("/res/png_to_ppm_testcase.ppm"), "result", out);
+    obj.loadImage(getImagePath("/test/testData/png_to_ppm_testcase.ppm"), "result", out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
   }
@@ -191,9 +187,9 @@ public class ConventionalImageManipulationsModelTest {
   @Test
   public void jpgToBmp() {
     ImageUtil.readFile(out,
-            getImagePath("/res/jpg_to_bmp.bmp"),
+            getImagePath("/test/testData/jpg_to_bmp.bmp"),
             "bmp");
-    obj.loadImage(getImagePath("/res/jpg_to_bmp.bmp"),
+    obj.loadImage(getImagePath("/test/testData/jpg_to_bmp.bmp"),
             "jpg_to_bmp_expected", out);
     String expected = obj.getImageProperties("jpg_to_bmp_expected");
     ImageUtil.readFile(out,
@@ -203,14 +199,13 @@ public class ConventionalImageManipulationsModelTest {
             "sample-jpeg", out);
     Path currentRelativePath = Paths.get("");
     StringBuilder s = new StringBuilder(currentRelativePath.toAbsolutePath().toString());
-    String str = s.append("/res/jpg_to_bmp_testcase.bmp").toString();
+    String str = s.append("/test/testData/jpg_to_bmp_testcase.bmp").toString();
     obj.saveImage(str, "sample-jpeg", out);
     ImageUtil.readFile(out,
-            getImagePath("/res/jpg_to_bmp_testcase.bmp"),
+            getImagePath("/test/testData/jpg_to_bmp_testcase.bmp"),
             "bmp");
-    obj.loadImage(getImagePath("/res/jpg_to_bmp_testcase.bmp"), "result", out);
+    obj.loadImage(getImagePath("/test/testData/jpg_to_bmp_testcase.bmp"), "result", out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
-  }*/
-
+  }
 }

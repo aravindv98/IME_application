@@ -191,6 +191,12 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
   @Override
   public void inputFromScriptFile(String filePath) throws IllegalArgumentException {
     PrintStream outputStream = new PrintStream(this.out);
+
+    outputStream.println("**********************************");
+    outputStream.println("Starting Script Execution!");
+    outputStream.println("**********************************");
+    outputStream.println();
+
     StringBuilder fileContent = getFileContent(filePath, outputStream);
     Scanner sc = new Scanner(fileContent.toString());
     while (sc.hasNextLine()) {
@@ -202,6 +208,11 @@ public class ImageManipulationsControllerImpl implements ImageManipulationsContr
       String[] arr = line.split(" ");
       this.executeModel(arr, outputStream);
     }
+
+    outputStream.println("**********************************");
+    outputStream.println("Script execution ended!");
+    outputStream.println("**********************************");
+    outputStream.println();
   }
 
   @Override
