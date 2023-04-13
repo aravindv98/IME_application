@@ -184,7 +184,9 @@ public class ConventionalImageManipulationsModelTest {
     assertEquals(expected, result);
   }
 
-  @Test
+  // Commenting out this test as it requires a large dataset, which we needed to remove
+  // to stay within the 7mb limit while submission.
+  /*@Test
   public void jpgToBmp() {
     ImageUtil.readFile(out,
             getImagePath("/test/testData/jpg_to_bmp.bmp"),
@@ -207,5 +209,5 @@ public class ConventionalImageManipulationsModelTest {
     obj.loadImage(getImagePath("/test/testData/jpg_to_bmp_testcase.bmp"), "result", out);
     String result = obj.getImageProperties("result");
     assertEquals(expected, result);
-  }
+  }*/
 }
