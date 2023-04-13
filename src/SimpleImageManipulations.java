@@ -10,20 +10,20 @@ import view.JFrameView;
  */
 public class SimpleImageManipulations {
 
-  /**
-   * Staring point of our program execution, calls the controller.
-   *
-   * @param args arguments passed to the main function.
-   */
-  public static void main(String[] args) throws IllegalArgumentException {
+    /**
+     * Staring point of our program execution, calls the controller.
+     *
+     * @param args arguments passed to the main function.
+     */
+    public static void main(String[] args) throws IllegalArgumentException {
 
-    if (args.length > 2) {
-      throw new IllegalArgumentException("Invalid number of arguments passed!");
-    }
+        if (args.length > 2) {
+            throw new IllegalArgumentException("Invalid number of arguments passed!");
+        }
 
-    // The good thing about our design is that the old client code
-    // used for Assignment 4, can still be reused by just removing the comments
-    // and commenting out the new client code.
+        // The good thing about our design is that the old client code
+        // used for Assignment 4, can still be reused by just removing the comments
+        // and commenting out the new client code.
 
     /*ImageManipulationsModel model = PPMImageManipulationsModel.getInstance();
     ImageManipulationsController controller = new ImageManipulationsControllerImpl(model,
@@ -40,30 +40,26 @@ public class SimpleImageManipulations {
       }
     }*/
 
-    if (args.length >= 1) {
-      // New Caller code
-      ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(
-              new ImageManipulationsModelFactory(),
-              System.out,
-              System.in);
-      if (args[0].equals("-text")) {
-        controller.inputFromUserCommands(); // Calls the main controller.
-      } else {
-        if (args[0].equals("-file")) {
-          controller.inputFromScriptFile(args[1]); // Calls the main controller.
+        if (args.length >= 1) {
+            // New Caller code
+            ImageManipulationsController controller = new ExtendedImageManipulationsControllerImpl(
+                    new ImageManipulationsModelFactory(),
+                    System.out,
+                    System.in);
+            if (args[0].equals("-text")) {
+                controller.inputFromUserCommands(); // Calls the main controller.
+            } else if (args[0].equals("-file")) {
+                controller.inputFromScriptFile(args[1]); // Calls the main controller.
+            } else {
+                throw new IllegalArgumentException("Invalid argument entered");
+            }
         } else {
-          throw new IllegalArgumentException("Invalid argument entered for" +
-                  "running a script!");
+            IView view = new JFrameView();
+            new GUICommandCallbackController(
+                    new ImageManipulationsModelFactory(),
+                    System.out,
+                    System.in,
+                    view);
         }
-      }
     }
-    else {
-      IView view = new JFrameView();
-      new GUICommandCallbackController(
-              new ImageManipulationsModelFactory(),
-              System.out,
-              System.in,
-              view);
-    }
-  }
 }
