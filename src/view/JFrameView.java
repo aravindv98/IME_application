@@ -41,19 +41,14 @@ import utility.Pixels;
 public class JFrameView extends JFrame implements IView {
 
   private final JPanel imagePanel;
-
-  private final JButton fileSaveButton;
-
-  private final JButton fileOpenButton;
-
-  private final JButton fileReloadButton;
-
-  private final JPanel radioPanel;
-
-  private final ButtonGroup buttonGroup;
   private final JTextField textField;
   private final JComboBox<String> dropdown;
   private final JButton brightnessButton;
+  private JButton fileSaveButton;
+  private JButton fileOpenButton;
+  private JButton fileReloadButton;
+  private JPanel radioPanel;
+  private ButtonGroup buttonGroup;
   private String[] currentImages;
   private File originalImage;
   private IHistogram histogram;
@@ -76,45 +71,18 @@ public class JFrameView extends JFrame implements IView {
     JPanel dialogBoxesPanel = new JPanel();
 
     //file open
-    JPanel fileopenPanel = new JPanel();
-    fileopenPanel.setLayout(new FlowLayout());
-    dialogBoxesPanel.add(fileopenPanel);
-    fileOpenButton = new JButton("Open a file");
-    fileOpenButton.setActionCommand("Open file");
-    fileopenPanel.add(fileOpenButton);
+    addFileOpenButton(dialogBoxesPanel);
 
     //file save
-    JPanel filesavePanel = new JPanel();
-    filesavePanel.setLayout(new FlowLayout());
-    dialogBoxesPanel.add(filesavePanel);
-    fileSaveButton = new JButton("Save a file");
-    fileSaveButton.setActionCommand("Save file");
-    filesavePanel.add(fileSaveButton);
+    addFileSaveButton(dialogBoxesPanel);
 
     // Reload to original
-    JPanel fileReloadPanel = new JPanel();
-    fileReloadPanel.setLayout(new FlowLayout());
-    dialogBoxesPanel.add(fileReloadPanel);
-    fileReloadButton = new JButton("Reload to original image");
-    fileReloadButton.setActionCommand("Reload");
-    fileReloadPanel.add(fileReloadButton);
+    addReloadButton(dialogBoxesPanel);
 
     mainPanel.add(dialogBoxesPanel);
 
     //Radio-button
-    radioPanel = new JPanel(new GridLayout(0, 4));
-    radioPanel.setBorder(BorderFactory.createTitledBorder("Image Operations"));
-    buttonGroup = new ButtonGroup();
-
-    addRadioButton("sepia");
-    addRadioButton("dither");
-    addRadioButton("blur");
-    addRadioButton("sharpen");
-    addRadioButton("horizontal-flip");
-    addRadioButton("vertical-flip");
-    addRadioButton("rgb-split");
-    addRadioButton("rgb-combine");
-    addRadioButton("create-greyscale");
+    addRadioButtons();
 
     mainPanel.add(radioPanel);
 
@@ -155,7 +123,56 @@ public class JFrameView extends JFrame implements IView {
     mainPanel.add(imagePanel);
 
     // Create an initial blank panel
-    // Create an initial blank panel
+    addInitialBlankPanel();
+    this.histogram = null;
+    resetFocus();
+    setVisible(true);
+  }
+
+  private void addFileOpenButton(JPanel dialogBoxesPanel) {
+    JPanel fileopenPanel = new JPanel();
+    fileopenPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(fileopenPanel);
+    fileOpenButton = new JButton("Open a file");
+    fileOpenButton.setActionCommand("Open file");
+    fileopenPanel.add(fileOpenButton);
+  }
+
+  private void addFileSaveButton(JPanel dialogBoxesPanel) {
+    JPanel filesavePanel = new JPanel();
+    filesavePanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(filesavePanel);
+    fileSaveButton = new JButton("Save a file");
+    fileSaveButton.setActionCommand("Save file");
+    filesavePanel.add(fileSaveButton);
+  }
+
+  private void addReloadButton(JPanel dialogBoxesPanel) {
+    JPanel fileReloadPanel = new JPanel();
+    fileReloadPanel.setLayout(new FlowLayout());
+    dialogBoxesPanel.add(fileReloadPanel);
+    fileReloadButton = new JButton("Reload to original image");
+    fileReloadButton.setActionCommand("Reload");
+    fileReloadPanel.add(fileReloadButton);
+  }
+
+  private void addRadioButtons() {
+    radioPanel = new JPanel(new GridLayout(0, 4));
+    radioPanel.setBorder(BorderFactory.createTitledBorder("Image Operations"));
+    buttonGroup = new ButtonGroup();
+
+    addRadioButton("sepia");
+    addRadioButton("dither");
+    addRadioButton("blur");
+    addRadioButton("sharpen");
+    addRadioButton("horizontal-flip");
+    addRadioButton("vertical-flip");
+    addRadioButton("rgb-split");
+    addRadioButton("rgb-combine");
+    addRadioButton("create-greyscale");
+  }
+
+  private void addInitialBlankPanel() {
     JLabel[] imageLabel = new JLabel[1];
     JScrollPane[] imageScrollPane = new JScrollPane[1];
 
@@ -166,10 +183,6 @@ public class JFrameView extends JFrame implements IView {
     imageLabel[0].setFont(new Font("Arial", Font.PLAIN, 24)); // Increase the font size
     imageScrollPane[0].setPreferredSize(new Dimension(100, 450));
     imagePanel.add(imageScrollPane[0]);
-
-    this.histogram = null;
-    resetFocus();
-    setVisible(true);
   }
 
   @Override
